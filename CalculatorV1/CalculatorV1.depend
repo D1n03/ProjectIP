@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1669464631 source:d:\uaic stuff\introducere in programare\proiect all versions\calculatorv1\main.cpp
+	<iostream>
+	<cstring>
+	<stack>
+	<math.h>
+
