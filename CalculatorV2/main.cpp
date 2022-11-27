@@ -28,6 +28,9 @@ void WordsToNumbers()
     ptr = strtok(input, sep);
     while (ptr)
     {
+        /// pentru cazul in care semnul intrebarii este legat de ultimul numar
+        if (ptr[strlen(ptr) - 1] == '?')
+            ptr[strlen(ptr) - 1] = '\0';
         extractOnlyTheUsefulWords(ptr);
         ptr = strtok(NULL, sep);
     }
@@ -50,8 +53,8 @@ void WordsToNumbers()
                 if (strstr(ptr, "/")) { vectorCOD[i] = '/'; i++; }
                 if (strstr(ptr, ","))
                     if (foundNumber) { vectorCOD[i] = 'n'; i++; }
-                if (strstr(ptr, "?"))
-                    if (foundNumber) { vectorCOD[i] = 'n'; i++; }
+                //if (strstr(ptr, "?")) /// inainte trebuia sa fie spatiu intre numar si semnul intrebarii
+                    //if (foundNumber) { vectorCOD[i] = 'n'; i++; }
                 if (strstr(ptr, "plus"))
                 {
                     if (foundNumber)
@@ -106,6 +109,7 @@ void WordsToNumbers()
             }
             ptr = strtok(NULL, sep);
     }
+    if (foundNumber) { vectorCOD[i] = 'n'; i++; } /// addeed: mereu o sa fie un numar la urma 
     if (previous != 0)
         Operator += previous;
     if (intermediate != 0)

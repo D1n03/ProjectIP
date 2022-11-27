@@ -610,7 +610,7 @@ void extractOnlyTheUsefulWords(char *ptr) /// inlaturam cuvintele inutile din pr
     {
         if (strstr(ptr,","))
         {
-            ptr[strlen(ptr) - 1] = NULL;
+            ptr[strlen(ptr) - 1] = '\0';
             strcat(inputModified, ptr);
             strcat(inputModified, sep);
             strcat(inputModified, ",");
@@ -625,8 +625,8 @@ void extractOnlyTheUsefulWords(char *ptr) /// inlaturam cuvintele inutile din pr
 //        IntegerIntoWord(newNumber, changedS);
 //        strcat(inputModified, changedS);
 //    }
-    if (strstr(ptr, "?"))
-        strcat(inputModified, "?");
+    //if (strstr(ptr, "?"))
+        //strcat(inputModified, "?");
 
     strcat(inputModified, sep);
 }
