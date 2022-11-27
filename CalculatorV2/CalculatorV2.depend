@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1669555928 source:d:\uaic stuff\introducere in programare\proiect all versions\calculatorv2\main.cpp
+	<iostream>
+	<cstring>
+	<stack>
+	<math.h>
+	"printnum.h"
+	"conv.h"
+	"calculate.h"
+
+1669554913 d:\uaic stuff\introducere in programare\proiect all versions\calculatorv2\printnum.h
+	<iostream>
+	<cstring>
+
+1669555601 d:\uaic stuff\introducere in programare\proiect all versions\calculatorv2\conv.h
+	<iostream>
+	<cstring>
+	<stack>
+	<math.h>
+
+1669555923 d:\uaic stuff\introducere in programare\proiect all versions\calculatorv2\calculate.h
+	<iostream>
+
