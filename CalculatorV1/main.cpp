@@ -314,12 +314,284 @@ bool isNumber(char *ptr)
     return false;
 }
 
-/// implementare numar in arab ca input in numar in romana
-void IntegerIntoWord(char *ptr)
+int charToInt(char *ptr)
 {
-    cout << "numar";
-}
+    int num = 0;
+    for (int i = 0; i < strlen(ptr); i++)
+    {
+        int digit = ptr[i] - '0';
+        num = num * 10 + digit;
+    }
+    return num;
 
+}
+/// START
+/// implementare numar in arab ca input in numar in romana
+void IntegerIntoWord(int numar, char rez[200])
+{
+    int ok, ok1, ok2, ok3, stanga, rest;
+    ok = 0;
+    ok1 = 0;
+    ok2 = 1;
+    ok3 = 1;
+    char cazuri[30][50]= {"","unu","doua","trei","patru","cinci","sase","sapte","opt","noua","zeci",
+                      "unsprezece","douasprezece","treisprezece","paisprezece","cincisprezece",
+                      "saisprezece","saptesprezece","optsprezece","nouasprezece","douazeci",
+                      "treizeci","patruzeci","cincizeci","saizeci","saptezeci","optzeci","nouazeci"
+                     };
+    while(1)
+    {
+        if(!numar)
+        {
+            break;
+        }
+        ///intre 0 si 20
+        if (numar>=0 && numar<=20)
+        {
+            ///cazuri particulare
+            if (numar==2)
+            {
+                strcat(rez," doi ");
+                //rez.append(" doi ");
+                return;
+            }
+            if (numar==0)
+            {
+                strcat(rez," zero ");
+                //rez.append(" zero ");
+                return;
+            }
+            if (numar==10)
+            {
+                strcat(rez," zece ");
+                return;
+            }
+            ///altfel, daca nu sunt cazuri particulare
+            strcat(rez,cazuri[numar]);
+            return;
+
+        }
+        ///mai mare sau egal cu un miliard
+        if (numar==100000000)
+        {
+            strcat(rez," un miliard ");
+            return;
+        }
+        if (numar>=100000000)
+        {
+            stanga = numar/100000000;
+            if (numar/100000000 % 10 !=0)
+            {
+                if (stanga==1)
+                {
+                    strcat(rez," o suta ");
+                }
+                else
+                {
+                    strcat(rez,cazuri[stanga]);
+                    strcat(rez," sute ");
+                }
+            }
+            else
+            {
+                if (stanga==1)
+                {
+                    strcat(rez," o suta de milioane ");
+                }
+                else
+                {
+
+                    strcat(rez,cazuri[stanga]);
+                    strcat(rez," sute de milioane ");
+                }
+            }
+            numar-=stanga*100000000;
+        }
+        ///10 milioane
+        if (numar>=10000000)
+        {
+            stanga = numar/1000000;
+            if (stanga==10)
+            {
+                strcat(rez," zece milioane ");
+            }
+            else if (stanga>10 && stanga<20)
+            {
+                strcat(rez,cazuri[stanga]);
+                strcat(rez," milioane ");
+            }
+            else if (stanga==20)
+            {
+                strcat(rez,cazuri[stanga]);
+                strcat(rez," de milioane ");
+            }
+            else if (stanga>20)
+            {
+                rest= numar/1000000;
+                if (rest%10==0)
+                {
+                    strcat(rez,cazuri[18+rest/10]);
+                    strcat(rez," de milioane ");
+                }
+                else
+                {
+                    strcat(rez,cazuri[18+rest/10]);
+                    strcat(rez," si ");
+                    strcat(rez,cazuri[rest%10]);
+                    strcat(rez," de milioane ");
+                }
+
+            }
+            numar = numar - stanga*1000000;
+            ok3=0;
+        }
+
+        if (numar>=1000000 && ok3)
+        {
+            stanga = numar/1000000;
+            if (stanga==1)
+            {
+                strcat(rez," un milion ");
+            }
+            else
+            {
+                strcat(rez,cazuri[stanga]);
+                strcat(rez," milioane ");
+            }
+            numar-=stanga*1000000;
+        }
+        ///100 de mii
+        if (numar>=100000)
+        {
+            stanga = numar/100000;
+            if (numar/10000 % 10 !=0)
+            {
+                if (stanga==1)
+                {
+                    strcat(rez," o suta ");
+                }
+                else
+                {
+                    strcat(rez,cazuri[stanga]);
+                    strcat(rez," sute ");
+                }
+            }
+            else
+            {
+                if (stanga==1)
+                {
+                    strcat(rez," o suta de mii ");
+                }
+                else
+                {
+                    strcat(rez,cazuri[stanga]);
+                    strcat(rez," sute de mii ");
+                }
+            }
+            numar-=stanga*100000;
+
+        }
+        ///10 mii
+        if (numar>=10000)
+        {
+            stanga = numar/1000;
+            if (stanga==10)
+            {
+                strcat(rez," zece mii ");
+            }
+            else if (stanga>10 && stanga<20)
+            {
+                strcat(rez,cazuri[stanga]);
+                strcat(rez," mii ");
+            }
+            else if (stanga==20)
+            {
+                strcat(rez,cazuri[stanga]);
+                strcat(rez," de mii ");
+            }
+            else if (stanga>20)
+            {
+                rest= numar/1000;
+                if (rest%10==0)
+                {
+                    strcat(rez,cazuri[18+rest/10]);
+                    strcat(rez," de mii ");
+                }
+                else
+                {
+                    strcat(rez,cazuri[18+rest/10]);
+                    strcat(rez," si ");
+                    strcat(rez,cazuri[rest%10]);
+                    strcat(rez," de mii ");
+                }
+            }
+            numar-=stanga*1000;
+            ok2=0;
+        }
+        ///mii
+        if (numar>=1000 && ok2)
+        {
+            stanga = numar/1000;
+
+            if (stanga==1)
+            {
+                strcat(rez," o mie ");
+            }
+            else
+            {
+                strcat(rez,cazuri[stanga]);
+                strcat(rez," mii ");
+            }
+            numar-=stanga*1000;
+            ok1=1;
+
+        }
+        ///sute
+        if (numar>=100)
+        {
+            stanga = numar/100;
+            if (stanga==1)
+            {
+                strcat(rez," o suta ");
+            }
+            else
+            {
+                strcat(rez,cazuri[stanga]);
+                strcat(rez," sute ");
+            }
+            numar-=stanga*100;
+            ok1=1;
+        }
+        if (numar>=20)
+        {
+            stanga = numar/10;
+            strcat(rez,cazuri[18+stanga]);
+            ok=1;
+            numar-=stanga*10;
+        }
+        if (ok)
+        {
+            if (numar==2)
+                strcat(rez," si doi ");
+            else if (numar==10)
+                strcat(rez," zece ");
+            else if (numar!=0 && numar!=2 && numar!=10)
+                strcat(rez," si ");
+            strcat(rez,cazuri[numar]);
+        }
+        if (ok1 && !ok)
+        {
+            if (numar==2)
+                strcat(rez," doi ");
+            else if (numar==10)
+                strcat(rez," zece ");
+            else if (numar!=0 && numar!=2)
+                strcat(rez,cazuri[numar]);
+        }
+
+    }
+}
+/// STOP HERE
 void extractOnlyTheUsefulWords(char *ptr) /// inlaturam cuvintele inutile din propozitie
 {
     if (strstr(ptr,"suma") || strstr(ptr,"adunat") || strstr(ptr,"adunarea") || strstr(ptr,"adunarii") || strstr(ptr,"sumei"))
@@ -357,8 +629,14 @@ void extractOnlyTheUsefulWords(char *ptr) /// inlaturam cuvintele inutile din pr
             strcat(inputModified, sep);
             }
             else strcat(inputModified, ptr);
-        }
-    //IntegerIntoWord(ptr)
+        } /// nu merge pentru unele cazuri but still, good work
+//    if (ptr[0] >= '0' && ptr[0] <= '9')
+//    {
+//        int newNumber = charToInt(ptr);
+//        char changedS[200] = "";
+//        IntegerIntoWord(newNumber, changedS);
+//        strcat(inputModified, changedS);
+//    }
     if (strstr(ptr, "?"))
         strcat(inputModified, "?");
 
@@ -469,7 +747,7 @@ void WordsToNumbers()
 /// FUNCTII PENTRU CALCULAREA INPUTULUI CONVERTIT ///
 /////////////////////////////////////////////////////
 
-int getRang(char current)  //functia returneaza prioritatea operatiei: 1 pt adunare si scadere, 2 pt inmultire si impartire, etc.
+int getPriority(char current)  //functia returneaza prioritatea operatiei: 1 pt adunare si scadere, 2 pt inmultire si impartire, etc.
 {
 	if (current == '+' || current == '-')
         return 1;
@@ -568,66 +846,65 @@ double calculate()
 int CalculateInputModified()
 {
     if (vectorCOD[0] == '+' || vectorCOD[0] == '-' || vectorCOD[0] == '*' || vectorCOD[0] == '/')
-    {
         number = to_string(calculate());
-    }
     else{
-    i = 0; j = 0;
-    char current; //variabila in care se inscrie caracterul curent prelucrat
-	double value; // valoarea
+        i = 0; j = 0;
+        char current; //variabila in care se inscrie caracterul curent prelucrat
+        double value; // valoarea
 
-	while (1) {
-		current = vectorCOD[i]; i++; // verificam primul simbol
-		if (current == '\n')
-            break; // daca ajungem la sfarsitul randului iesim din while
-		if (current == ' ')  // ignorarea spatiilor
-			continue;
-
-		if (current == 'n') { // daca am citit un numar
-			value = Numbers[j]; j++;
-			item.type = '0';
-			item.value = value;
-			StackNr.push(item); // numarul se insereaza in stiva cu numere
-			continue;
-		}
-		if (current == '+' || current == '-' || current == '*' || current == '/') { // daca am citit o operatie
-			if (StackOp.size() == 0) { // daca stiva cu operatii este vida
-				item.type = current;
-				item.value = 0;
-				StackOp.push(item); // operatia se insereaza in stiva cu operatii
-				continue;
-			}
-			if (StackOp.size() != 0 && getRang(current) > getRang(StackOp.top().type)) { // daca stiva nu este vida, insa prioritatea operatiei curente este mai mare decat cea din varful stivei
-				item.type = current;
-				item.value = 0;
-				StackOp.push(item); // operatia se insereaza in stiva cu operatii
-				continue;
-			}
-			if (StackOp.size() != 0 && getRang(current) <= getRang(StackOp.top().type)) { // daca stiva nu este vida, insa prioritatea operatiei curente e mai mica sau egala cu cea din varful stivei
-				if (CalculateInStack(StackNr, StackOp, item) == false) { // daca funtia returneaza 'false' incetam lucrul
-					system("pause");
-					return 0;
-				}
-				item.type = current;
-				item.value = 0;
-				StackOp.push(item); // operatia se insereaza in stiva cu operatii
-				continue;
-			}
-		}
-		else { //daca am citit un caracter straniu
-			break;
-		}
-    }
-    while (StackOp.size() != 0) //apelam functia matematica pana cand in stiva cu operatii nu raman 0 elemente
-    {
-        if (CalculateInStack(StackNr, StackOp, item) == false) //daca functia returneaza 'false' incetam calculul
+        while (true)
         {
-            system("pause");
-            return 0;
+            current = vectorCOD[i]; i++; // verificam primul simbol
+            if (current == '\n')
+                break; // daca ajungem la sfarsitul randului iesim din while
+            if (current == ' ')  // ignorarea spatiilor
+                continue;
+
+            if (current == 'n') { // daca am citit un numar
+                value = Numbers[j]; j++;
+                item.type = '0';
+                item.value = value;
+                StackNr.push(item); // numarul se insereaza in stiva cu numere
+                continue;
+            }
+            if (current == '+' || current == '-' || current == '*' || current == '/') { // daca am citit o operatie
+                if (StackOp.size() == 0) { // daca stiva cu operatii este vida
+                    item.type = current;
+                    item.value = 0;
+                    StackOp.push(item); // operatia se insereaza in stiva cu operatii
+                    continue;
+                }
+                if (StackOp.size() != 0 && getPriority(current) > getPriority(StackOp.top().type)) { // daca stiva nu este vida, insa prioritatea operatiei curente este mai mare decat cea din varful stivei
+                    item.type = current;
+                    item.value = 0;
+                    StackOp.push(item); // operatia se insereaza in stiva cu operatii
+                    continue;
+                }
+                if (StackOp.size() != 0 && getPriority(current) <= getPriority(StackOp.top().type)) { // daca stiva nu este vida, insa prioritatea operatiei curente e mai mica sau egala cu cea din varful stivei
+                    if (CalculateInStack(StackNr, StackOp, item) == false) { // daca funtia returneaza 'false' incetam lucrul
+                        system("pause");
+                        return 0;
+                    }
+                    item.type = current;
+                    item.value = 0;
+                    StackOp.push(item); // operatia se insereaza in stiva cu operatii
+                    continue;
+                }
+            }
+            else { //daca am citit un caracter straniu
+                break;
+            }
         }
-        else continue; //daca totul e bine
-	}
-    number = to_string(StackNr.top().value);
+        while (StackOp.size() != 0) //apelam functia matematica pana cand in stiva cu operatii nu raman 0 elemente
+        {
+            if (CalculateInStack(StackNr, StackOp, item) == false) //daca functia returneaza 'false' incetam calculul
+            {
+                system("pause");
+                return 0;
+            }
+            else continue; //daca totul e bine
+        }
+        number = to_string(StackNr.top().value);
     }
 }
 
