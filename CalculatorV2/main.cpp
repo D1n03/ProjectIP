@@ -2,6 +2,8 @@
 #include <cstring>
 #include <stack>
 #include <math.h>
+#include <graphics.h>
+#include <winbgim.h>
 #include "printnum.h"
 #include "conv.h"
 #include "calculate.h"
@@ -109,7 +111,7 @@ void WordsToNumbers()
             }
             ptr = strtok(NULL, sep);
     }
-    if (foundNumber) { vectorCOD[i] = 'n'; i++; } /// addeed: mereu o sa fie un numar la urma 
+    if (foundNumber) { vectorCOD[i] = 'n'; i++; } /// addeed: mereu o sa fie un numar la urma
     if (previous != 0)
         Operator += previous;
     if (intermediate != 0)
@@ -198,6 +200,8 @@ int CalculateInputModified()
 /// FUNCTII PENTRU CONVERTIREA DIN NUMERE IN CUVINTE ///
 ////////////////////////////////////////////////////////
 
+
+/// verificam mai intai sa vedem daca este intreg
 bool verifyInteger(string s, int len)
 {
     for (int i = 0; i < len; ++i)
@@ -205,7 +209,7 @@ bool verifyInteger(string s, int len)
             return false;
     return true;
 }
-
+/// convertim in numar intreg rezultatul
 string changeToInteger(string s, int len)
 {
     if (verifyInteger(s, len))
@@ -219,7 +223,7 @@ string changeToInteger(string s, int len)
 
 void NumbersToWords()
 {
-    /// implementare minus aici
+    /// implementare minus mai tarziu
 
     int len = number.size() - 1;
     string IntegerNumber = changeToInteger(number, len);
@@ -231,7 +235,7 @@ int main()
     cout << "Introduceti intrebarea: ";
     cin.getline(input, 256);
 
-    // convertim inputul in litere mici
+    /// convertim inputul in litere mici
     for (int i = 0; i < strlen(input); i++)
         input[i] = tolower(input[i]);
 
@@ -239,9 +243,19 @@ int main()
     CalculateInputModified(); /// functie care calculeaza inputul modificat
     NumbersToWords(); /// functie care converteste rezultatul inapoi
 
-    /// pentru ans = true, se afiseaza rezultatul, in caz contrar, avem o eroare
-    if (ans)
+    /// pentru ans = true, se afiseaza rezultatul, in caz contrar, avem o eroare, cazul cu impartirea la zero
+    if (ans == true)
         cout << "Rezultatul: " << FinalAns << "\n";
 
     return 0;
 }
+
+/*
+TO DO:
+-Implemenetare paranteze pentru ordinea opeartiilor astefel incat sa putem aplica alte functii, numere negative
+-Implemenetare functii : cos, sin, tg, ctg, ^ (pow) (posibil log)
+-Implementare meniu (rules, start, select language)
+-Implementare calculator in limba engleza
+cat scadem din 10 ca sa obtinem 3
+cat scade, scazi
+*/

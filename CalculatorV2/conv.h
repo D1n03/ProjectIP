@@ -314,6 +314,7 @@ int charToInt(char *ptr)
 }
 /// START
 /// implementare numar in arab ca input in numar in romana
+/*
 void IntegerIntoWord(int numar, char rez[200])
 {
     int ok, ok1, ok2, ok3, stanga, rest;
@@ -578,6 +579,7 @@ void IntegerIntoWord(int numar, char rez[200])
 
     }
 }
+*/
 /// STOP HERE
 
 void extractOnlyTheUsefulWords(char *ptr) /// inlaturam cuvintele inutile din propozitie
@@ -588,7 +590,7 @@ void extractOnlyTheUsefulWords(char *ptr) /// inlaturam cuvintele inutile din pr
     if (strstr(ptr,"plus") || strstr(ptr,"adunat"))
         strcat(inputModified,"plus");
 
-    if (strstr(ptr,"scader") || strstr(ptr,"-") || strstr(ptr,"diferenta") || strstr(ptr,"diferentei"))
+    if (strstr(ptr,"scader") || strstr(ptr,"-") || strstr(ptr,"diferenta") || strstr(ptr,"diferentei") || strstr(ptr, "scad"))
         strcat(inputModified,"-");
 
     if (strstr(ptr,"minus"))
@@ -618,13 +620,13 @@ void extractOnlyTheUsefulWords(char *ptr) /// inlaturam cuvintele inutile din pr
             }
             else strcat(inputModified, ptr);
         } /// nu merge pentru unele cazuri but still, good work
-//    if (ptr[0] >= '0' && ptr[0] <= '9')
-//    {
-//        int newNumber = charToInt(ptr);
-//        char changedS[200] = "";
-//        IntegerIntoWord(newNumber, changedS);
-//        strcat(inputModified, changedS);
-//    }
+    // if (ptr[0] >= '0' && ptr[0] <= '9')
+    // {
+    //     int newNumber = charToInt(ptr);
+    //     char changedS[200] = "";
+    //     IntegerIntoWord(newNumber, changedS);
+    //     strcat(inputModified, changedS);
+    // }
     //if (strstr(ptr, "?"))
         //strcat(inputModified, "?");
 
