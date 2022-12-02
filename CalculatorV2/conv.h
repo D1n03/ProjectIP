@@ -312,106 +312,47 @@ int charToInt(char *ptr)
     return num;
 
 }
-/// START
-/// implementare numar in arab ca input in numar in romana
-/*
+
+/// implementare numar scris normal ca input de tip char, in numar in romana
 void IntegerIntoWord(int numar, char rez[200])
 {
     int ok, ok1, ok2, ok3, stanga, rest;
     ok = 0;
-    ok1 = 0;
+    ok1 = 1;
     ok2 = 1;
     ok3 = 1;
-    char cazuri[30][50]= {"","unu","doua","trei","patru","cinci","sase","sapte","opt","noua","zeci",
-                      "unsprezece","douasprezece","treisprezece","paisprezece","cincisprezece",
-                      "saisprezece","saptesprezece","optsprezece","nouasprezece","douazeci",
-                      "treizeci","patruzeci","cincizeci","saizeci","saptezeci","optzeci","nouazeci"
-                     };
-    while(1)
-    {
+    char cazuri[30][50]= {"","unu ","doua ","trei ","patru ","cinci ","sase ","sapte ","opt ","noua ","zeci ",
+                      "unsprezece ","douasprezece ","treisprezece ","paisprezece ","cincisprezece ",
+                      "saisprezece ","saptesprezece ","optsprezece ","nouasprezece ","douazeci ",
+                      "treizeci ","patruzeci ","cincizeci ","saizeci ","saptezeci ","optzeci ","nouazeci " };
+        ///caz special zero
         if(!numar)
-        {
-            break;
-        }
-        ///intre 0 si 20
-        if (numar>=0 && numar<=20)
-        {
-            ///cazuri particulare
-            if (numar==2)
-            {
-                strcat(rez," doi ");
-                //rez.append(" doi ");
-                return;
-            }
-            if (numar==0)
-            {
-                strcat(rez," zero ");
-                //rez.append(" zero ");
-                return;
-            }
-            if (numar==10)
-            {
-                strcat(rez," zece ");
-                return;
-            }
-            ///altfel, daca nu sunt cazuri particulare
-            strcat(rez,cazuri[numar]);
-            return;
-
-        }
-        ///mai mare sau egal cu un miliard
+            strcat(rez, "zero ");
+        ///egal cu o suta milioane
         if (numar==100000000)
         {
-            strcat(rez," un miliard ");
-            return;
-        }
-        if (numar>=100000000)
-        {
+            strcat(rez,"o suta de milioane ");
             stanga = numar/100000000;
-            if (numar/100000000 % 10 !=0)
-            {
-                if (stanga==1)
-                {
-                    strcat(rez," o suta ");
-                }
-                else
-                {
-                    strcat(rez,cazuri[stanga]);
-                    strcat(rez," sute ");
-                }
-            }
-            else
-            {
-                if (stanga==1)
-                {
-                    strcat(rez," o suta de milioane ");
-                }
-                else
-                {
-
-                    strcat(rez,cazuri[stanga]);
-                    strcat(rez," sute de milioane ");
-                }
-            }
-            numar-=stanga*100000000;
+            ok1 = 0;
         }
+        if(ok1) {
         ///10 milioane
         if (numar>=10000000)
         {
             stanga = numar/1000000;
             if (stanga==10)
             {
-                strcat(rez," zece milioane ");
+                strcat(rez,"zece milioane ");
             }
             else if (stanga>10 && stanga<20)
             {
                 strcat(rez,cazuri[stanga]);
-                strcat(rez," milioane ");
+                strcat(rez,"milioane ");
             }
             else if (stanga==20)
             {
                 strcat(rez,cazuri[stanga]);
-                strcat(rez," de milioane ");
+                strcat(rez,"de milioane ");
             }
             else if (stanga>20)
             {
@@ -419,16 +360,15 @@ void IntegerIntoWord(int numar, char rez[200])
                 if (rest%10==0)
                 {
                     strcat(rez,cazuri[18+rest/10]);
-                    strcat(rez," de milioane ");
+                    strcat(rez,"de milioane ");
                 }
                 else
                 {
                     strcat(rez,cazuri[18+rest/10]);
-                    strcat(rez," si ");
+                    strcat(rez,"si ");
                     strcat(rez,cazuri[rest%10]);
-                    strcat(rez," de milioane ");
+                    strcat(rez,"de milioane ");
                 }
-
             }
             numar = numar - stanga*1000000;
             ok3=0;
@@ -439,12 +379,12 @@ void IntegerIntoWord(int numar, char rez[200])
             stanga = numar/1000000;
             if (stanga==1)
             {
-                strcat(rez," un milion ");
+                strcat(rez,"un milion ");
             }
             else
             {
                 strcat(rez,cazuri[stanga]);
-                strcat(rez," milioane ");
+                strcat(rez,"milioane ");
             }
             numar-=stanga*1000000;
         }
@@ -456,28 +396,27 @@ void IntegerIntoWord(int numar, char rez[200])
             {
                 if (stanga==1)
                 {
-                    strcat(rez," o suta ");
+                    strcat(rez,"o suta ");
                 }
                 else
                 {
                     strcat(rez,cazuri[stanga]);
-                    strcat(rez," sute ");
+                    strcat(rez,"sute ");
                 }
             }
             else
             {
                 if (stanga==1)
                 {
-                    strcat(rez," o suta de mii ");
+                    strcat(rez,"o suta de mii ");
                 }
                 else
                 {
                     strcat(rez,cazuri[stanga]);
-                    strcat(rez," sute de mii ");
+                    strcat(rez,"sute de mii ");
                 }
             }
             numar-=stanga*100000;
-
         }
         ///10 mii
         if (numar>=10000)
@@ -485,17 +424,17 @@ void IntegerIntoWord(int numar, char rez[200])
             stanga = numar/1000;
             if (stanga==10)
             {
-                strcat(rez," zece mii ");
+                strcat(rez,"zece mii ");
             }
             else if (stanga>10 && stanga<20)
             {
                 strcat(rez,cazuri[stanga]);
-                strcat(rez," mii ");
+                strcat(rez,"mii ");
             }
             else if (stanga==20)
             {
                 strcat(rez,cazuri[stanga]);
-                strcat(rez," de mii ");
+                strcat(rez,"de mii ");
             }
             else if (stanga>20)
             {
@@ -503,14 +442,14 @@ void IntegerIntoWord(int numar, char rez[200])
                 if (rest%10==0)
                 {
                     strcat(rez,cazuri[18+rest/10]);
-                    strcat(rez," de mii ");
+                    strcat(rez,"de mii ");
                 }
                 else
                 {
                     strcat(rez,cazuri[18+rest/10]);
-                    strcat(rez," si ");
+                    strcat(rez,"si ");
                     strcat(rez,cazuri[rest%10]);
-                    strcat(rez," de mii ");
+                    strcat(rez,"de mii ");
                 }
             }
             numar-=stanga*1000;
@@ -523,15 +462,14 @@ void IntegerIntoWord(int numar, char rez[200])
 
             if (stanga==1)
             {
-                strcat(rez," o mie ");
+                strcat(rez,"o mie ");
             }
             else
             {
                 strcat(rez,cazuri[stanga]);
-                strcat(rez," mii ");
+                strcat(rez,"mii ");
             }
             numar-=stanga*1000;
-            ok1=1;
 
         }
         ///sute
@@ -540,15 +478,14 @@ void IntegerIntoWord(int numar, char rez[200])
             stanga = numar/100;
             if (stanga==1)
             {
-                strcat(rez," o suta ");
+                strcat(rez,"o suta ");
             }
             else
             {
                 strcat(rez,cazuri[stanga]);
-                strcat(rez," sute ");
+                strcat(rez,"sute ");
             }
             numar-=stanga*100;
-            ok1=1;
         }
         if (numar>=20)
         {
@@ -560,27 +497,24 @@ void IntegerIntoWord(int numar, char rez[200])
         if (ok)
         {
             if (numar==2)
-                strcat(rez," si doi ");
+                strcat(rez,"si doi ");
             else if (numar==10)
-                strcat(rez," zece ");
+                strcat(rez,"zece ");
             else if (numar!=0 && numar!=2 && numar!=10)
-                strcat(rez," si ");
+                strcat(rez,"si ");
             strcat(rez,cazuri[numar]);
         }
-        if (ok1 && !ok)
+        if (!ok)
         {
             if (numar==2)
-                strcat(rez," doi ");
+                strcat(rez,"doi ");
             else if (numar==10)
-                strcat(rez," zece ");
+                strcat(rez,"zece ");
             else if (numar!=0 && numar!=2)
                 strcat(rez,cazuri[numar]);
         }
-
     }
 }
-*/
-/// STOP HERE
 
 void extractOnlyTheUsefulWords(char *ptr) /// inlaturam cuvintele inutile din propozitie
 {
@@ -602,7 +536,7 @@ void extractOnlyTheUsefulWords(char *ptr) /// inlaturam cuvintele inutile din pr
     if (strstr(ptr,"inmultit") || strstr(ptr,"ori"))//dupa cuvantul "inmultit" se va pune cuvantul "la"
         strcat(inputModified,"ori");
 
-    if (strstr(ptr,"raport") || strstr(ptr,"impartirea") || strstr(ptr,"impartirei") || strstr(ptr,"impartirii"))
+    if (strstr(ptr,"raport") || strstr(ptr,"impartirea") || strstr(ptr,"impartirei") || strstr(ptr,"impartirii") || strstr(ptr,"impartim"))
         strcat(inputModified,"/");
 
     if (strstr(ptr,"impartit"))
@@ -619,14 +553,14 @@ void extractOnlyTheUsefulWords(char *ptr) /// inlaturam cuvintele inutile din pr
             strcat(inputModified, sep);
             }
             else strcat(inputModified, ptr);
-        } /// nu merge pentru unele cazuri but still, good work
-    // if (ptr[0] >= '0' && ptr[0] <= '9')
-    // {
-    //     int newNumber = charToInt(ptr);
-    //     char changedS[200] = "";
-    //     IntegerIntoWord(newNumber, changedS);
-    //     strcat(inputModified, changedS);
-    // }
+    } 
+    if (ptr[0] >= '0' && ptr[0] <= '9')
+    {
+        int newNumber = charToInt(ptr);
+        char changedS[200] = "";
+        IntegerIntoWord(newNumber, changedS);
+        strcat(inputModified, changedS);
+    }
     //if (strstr(ptr, "?"))
         //strcat(inputModified, "?");
 
