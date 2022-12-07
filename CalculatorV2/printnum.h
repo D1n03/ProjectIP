@@ -1,10 +1,7 @@
 #include <iostream>
 #include <cstring>
-
 using namespace std;
-
 char FinalAns[256] = "";
-
 void printDigit(string s, int Start, int Final)
 {
     switch (s[Final])
@@ -41,7 +38,6 @@ void printDigit(string s, int Start, int Final)
         break;
     }
 }
-
 void printSpecialCase(string s, int Start, int Final)
 {
     switch (s[Start])
@@ -59,7 +55,6 @@ void printSpecialCase(string s, int Start, int Final)
             strcat(FinalAns, " sai");
     }
 }
-
 void printSpecialCase2(string s, int Start, int Final)
 {
     switch (s[Start])
@@ -73,7 +68,6 @@ void printSpecialCase2(string s, int Start, int Final)
         break;
     }
 }
-
 void printDecimal(string s, int Start, int Final)
 {
     if (s[Start] == '1')
@@ -159,7 +153,6 @@ void printDecimal(string s, int Start, int Final)
         }
     }
 }
-
 void printHundred(string s, int Start, int Final)
 {
     int nonZerosPozition = Final + 1;
@@ -201,7 +194,6 @@ void printHundred(string s, int Start, int Final)
             break;
     }
 }
-
 void printThousand(string s, int Start, int Final)
 {
     int nonZerosPozition = Final + 1;
@@ -254,7 +246,6 @@ void printThousand(string s, int Start, int Final)
     for (int i = Start; i <= Final; ++i)
         newS = newS + s[i];
     int new_len = newS.size();
-
     switch (new_len)
     {
         case 1:
@@ -268,7 +259,6 @@ void printThousand(string s, int Start, int Final)
             break;
     }
 }
-
 void printMillions(string s, int Start, int Final)
 {
     int nonZeroPozition = Final + 1;
@@ -343,7 +333,6 @@ void printMillions(string s, int Start, int Final)
             break;
     }
 }
-
 void printNumber(string s, int len)
 {
     switch (len)
