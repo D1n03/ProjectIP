@@ -45,3 +45,27 @@
 1669724274 c:\users\asus\documents\github\projectip\calculatorv2\calculate.h
 	<iostream>
 
+1670005323 source:c:\users\andr_\documents\github\projectip\calculatorv2\main.cpp
+	<iostream>
+	<cstring>
+	<stack>
+	<math.h>
+	<graphics.h>
+	<winbgim.h>
+	"printnum.h"
+	"conv.h"
+	"calculate.h"
+
+1669821391 c:\users\andr_\documents\github\projectip\calculatorv2\printnum.h
+	<iostream>
+	<cstring>
+
+1670005477 c:\users\andr_\documents\github\projectip\calculatorv2\conv.h
+	<iostream>
+	<cstring>
+	<stack>
+	<math.h>
+
+1669821391 c:\users\andr_\documents\github\projectip\calculatorv2\calculate.h
+	<iostream>
+
