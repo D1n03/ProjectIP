@@ -4,6 +4,8 @@
 #include <math.h>
 using namespace std;
 char inputModified[256] = "", sep[] = " ";
+bool mii = 0;
+bool millions = 0;
 /// struct in care codificam operatiile
 struct codification
 {
@@ -31,6 +33,10 @@ double tg(double x)
     double b = Cos(x);
     return (a / b);
 }
+double Log(double x) 
+{   //functie pt caclului log
+    return(round(log(x) * 100000000) / 100000000);
+}
 /// functie de tip bool deoarece dorim sa returnam false cand apare o eroare
 bool CalculateInStack(stack < codification >& StackNr, stack < codification >& StackOp, codification& item)
 {
@@ -57,7 +63,6 @@ bool CalculateInStack(stack < codification >& StackNr, stack < codification >& S
         StackNr.push(item);
         StackOp.pop();
         break;
-
     case '*': // inmultire
         Nr2 = StackNr.top().value;
         StackNr.pop();
@@ -67,7 +72,6 @@ bool CalculateInStack(stack < codification >& StackNr, stack < codification >& S
         StackNr.push(item);
         StackOp.pop();
         break;
-
     case '^': //ridicare la putere
         Nr2 = StackNr.top().value;
         StackNr.pop();
@@ -109,7 +113,7 @@ bool CalculateInStack(stack < codification >& StackNr, stack < codification >& S
         break;
     case 't':  //tangenta
         if (Cos(Nr1) == 0) {
-            cerr << "\nArgument gresit pentru tangent!\n";
+            cout << "\nArgument gresit pentru tangent!\n";
             return false;
         }
         else {
@@ -122,11 +126,24 @@ bool CalculateInStack(stack < codification >& StackNr, stack < codification >& S
         }
     case 'g':  //cotangenta
         if (Sin(Nr1) == 0) {
-            cerr << "\nArgument gresit pentru cotangent!\n";
+            cout << "\nArgument gresit pentru cotangent!\n";
             return false;
         }
         else {
             Rez = ctg(Nr1);
+            item.type = '0';
+            item.value = Rez;
+            StackNr.push(item);
+            StackOp.pop();
+            break;
+        }
+    case 'l':  //logaritm natural
+        if (Nr1 < 1) {
+            cout << "\nArgumentul trebuie sa fie mai mare ca 1 la logaritm natural pentru ca lucram cu numere pozitive!\n";
+            return false;
+        }
+        else {
+            Rez = Log(Nr1);
             item.type = '0';
             item.value = Rez;
             StackNr.push(item);
@@ -341,207 +358,100 @@ int charToInt(char* ptr)
         num = num * 10 + digit;
     }
     return num;
-
 }
 /// implementare numar scris normal ca input de tip char, in numar in romana
-void IntegerIntoWord(int numar, char rez[200])
+void IntegerIntoWord(int val, bool flag, char newNS[200])
 {
-    int ok, ok1, ok2, ok3, stanga, rest;
-    ok = 0;
-    ok1 = 1;
-    ok2 = 1;
-    ok3 = 1;
-    char cazuri[30][50] = { "","unu ","doua ","trei ","patru ","cinci ","sase ","sapte ","opt ","noua ","zeci ",
-                      "unsprezece ","douasprezece ","treisprezece ","paisprezece ","cincisprezece ",
-                      "saisprezece ","saptesprezece ","optsprezece ","nouasprezece ","douazeci ",
-                      "treizeci ","patruzeci ","cincizeci ","saizeci ","saptezeci ","optzeci ","nouazeci " };
-    ///caz special zero
-    if (!numar)
-        strcat(rez, "zero ");
-    ///egal cu o suta milioane
-    if (numar == 100000000)
+    char first1[20][20] = { "zero ","unu ", "doi ", "trei ","patru ","cinci ","sase ","sapte ","opt ","noua ","zece ","unsprezece ","doisprezece ","treisprezece ","paisprezece ","cincisprezece ","saisprezece ","saptesprezece ","optsprezece ","nouasprezece " };
+    char first0[20][20] = { "zero ","o ", "doua ", "trei ","patru ","cinci ","sase ","sapte ","opt ","noua ","zece ","unsprezece ","douasprezece ","treisprezece ","paisprezece ","cincisprezece ","saisprezece ","saptesprezece ","optsprezece ","nouasprezece " };
+    char second[10][20] = { " ", "zece ", "douazeci ", "treizeci ","patruzeci ","cincizeci ","saizeci ","saptezeci ","optzeci ","nouazeci " };
+    if (val >= 1000000)
     {
-        strcat(rez, "o suta de milioane ");
-        stanga = numar / 100000000;
-        ok1 = 0;
-    }
-    if (ok1) {
-        ///10 milioane
-        if (numar >= 10000000)
+        if (val >= 1000000 && val < 2000000)
         {
-            stanga = numar / 1000000;
-            if (stanga == 10)
-            {
-                strcat(rez, "zece milioane ");
-            }
-            else if (stanga > 10 && stanga < 20)
-            {
-                strcat(rez, cazuri[stanga]);
-                strcat(rez, "milioane ");
-            }
-            else if (stanga == 20)
-            {
-                strcat(rez, cazuri[stanga]);
-                strcat(rez, "de milioane ");
-            }
-            else if (stanga > 20)
-            {
-                rest = numar / 1000000;
-                if (rest % 10 == 0)
-                {
-                    strcat(rez, cazuri[18 + rest / 10]);
-                    strcat(rez, "de milioane ");
-                }
-                else
-                {
-                    strcat(rez, cazuri[18 + rest / 10]);
-                    strcat(rez, "si ");
-                    strcat(rez, cazuri[rest % 10]);
-                    strcat(rez, "de milioane ");
-                }
-            }
-            numar = numar - stanga * 1000000;
-            ok3 = 0;
+            millions = 1;
+            strcat(newNS, "un milion ");
+            millions = 0;
         }
-        if (numar >= 1000000 && ok3)
+        else
         {
-            stanga = numar / 1000000;
-            if (stanga == 1)
-            {
-                strcat(rez, "un milion ");
-            }
-            else
-            {
-                strcat(rez, cazuri[stanga]);
-                strcat(rez, "milioane ");
-            }
-            numar -= stanga * 1000000;
+            millions = 1;
+            IntegerIntoWord(val / 1000000, 0, newNS);
+            //if ((val / 10000000) % 10 >= 2 || val / 10000000 == 10)
+                //strcat(newNS, "de ");
+            strcat(newNS, "milioane ");
+            millions = 0;
         }
-        ///100 de mii
-        if (numar >= 100000)
+        if (val % 1000000)
         {
-            stanga = numar / 100000;
-            if (numar / 10000 % 10 != 0)
-            {
-                if (stanga == 1)
-                {
-                    strcat(rez, "o suta ");
-                }
-                else
-                {
-                    strcat(rez, cazuri[stanga]);
-                    strcat(rez, "sute ");
-                }
-            }
-            else
-            {
-                if (stanga == 1)
-                {
-                    strcat(rez, "o suta de mii ");
-                }
-                else
-                {
-                    strcat(rez, cazuri[stanga]);
-                    strcat(rez, "sute de mii ");
-                }
-            }
-            numar -= stanga * 100000;
-        }
-        ///10 mii
-        if (numar >= 10000)
-        {
-            stanga = numar / 1000;
-            if (stanga == 10)
-            {
-                strcat(rez, "zece mii ");
-            }
-            else if (stanga > 10 && stanga < 20)
-            {
-                strcat(rez, cazuri[stanga]);
-                strcat(rez, "mii ");
-            }
-            else if (stanga == 20)
-            {
-                strcat(rez, cazuri[stanga]);
-                strcat(rez, "de mii ");
-            }
-            else if (stanga > 20)
-            {
-                rest = numar / 1000;
-                if (rest % 10 == 0)
-                {
-                    strcat(rez, cazuri[18 + rest / 10]);
-                    strcat(rez, "de mii ");
-                }
-                else
-                {
-                    strcat(rez, cazuri[18 + rest / 10]);
-                    strcat(rez, "si ");
-                    strcat(rez, cazuri[rest % 10]);
-                    strcat(rez, "de mii ");
-                }
-            }
-            numar -= stanga * 1000;
-            ok2 = 0;
-        }
-        ///mii
-        if (numar >= 1000 && ok2)
-        {
-            stanga = numar / 1000;
-
-            if (stanga == 1)
-            {
-                strcat(rez, "o mie ");
-            }
-            else
-            {
-                strcat(rez, cazuri[stanga]);
-                strcat(rez, "mii ");
-            }
-            numar -= stanga * 1000;
-        }
-        ///sute
-        if (numar >= 100)
-        {
-            stanga = numar / 100;
-            if (stanga == 1)
-            {
-                strcat(rez, "o suta ");
-            }
-            else
-            {
-                strcat(rez, cazuri[stanga]);
-                strcat(rez, "sute ");
-            }
-            numar -= stanga * 100;
-        }
-        if (numar >= 20)
-        {
-            stanga = numar / 10;
-            strcat(rez, cazuri[18 + stanga]);
-            ok = 1;
-            numar -= stanga * 10;
-        }
-        if (ok)
-        {
-            if (numar == 2)
-                strcat(rez, "si doi ");
-            else if (numar == 10)
-                strcat(rez, "zece ");
-            else if (numar != 0 && numar != 2 && numar != 10)
-                strcat(rez, "si ");
-            strcat(rez, cazuri[numar]);
-        }
-        if (!ok)
-        {
-            if (numar == 2)
-                strcat(rez, "doi ");
-            else if (numar == 10)
-                strcat(rez, "zece ");
-            else if (numar != 0 && numar != 2)
-                strcat(rez, cazuri[numar]);
+            IntegerIntoWord(val % 1000000, 1, newNS);
         }
     }
+    else if (val >= 1000)
+    {
+        if (val >= 1000 && val < 2000)
+        {
+            mii = 1;
+            IntegerIntoWord(val / 1000, 0, newNS);
+            strcat(newNS, "mie ");
+            mii = 0;
+        }
+        else
+        {
+            mii = 1;
+            IntegerIntoWord(val / 1000, 0, newNS);
+            //if ((val / 10000) % 10 >= 2 || (val / 1000) % 100 == 0)
+                //strcat(newNS, "de ");
+            strcat(newNS, "mii ");
+            mii = 0;
+        }
+        if (val % 1000)
+        {
+            IntegerIntoWord(val % 1000, 1, newNS);
+        }
+    }
+    else if (val >= 100)
+    {
+        if (val >= 100 && val < 200)
+        {
+            IntegerIntoWord(val / 100, 0, newNS);
+            strcat(newNS, "suta ");
+        }
+        else
+        {
+            IntegerIntoWord(val / 100, 0, newNS);
+            strcat(newNS, "sute ");
+        }
+        if (val % 100)
+        {
+            IntegerIntoWord(val % 100, 1, newNS);
+        }
+    }
+    else if (val >= 20)
+    {
+        strcat(newNS, second[val / 10]);
+        if (val % 10)
+        {
+            strcat(newNS, "si ");
+            IntegerIntoWord(val % 10, 1, newNS);
+        }
+    }
+    else
+    {
+        if (mii == 1 || millions == 1)
+        {
+            strcat(newNS, first0[val]);
+        }
+        else if (flag == 0)
+        {
+            strcat(newNS, first0[val]);
+        }
+        else
+        {
+            strcat(newNS, first1[val]);
+        }
+    }
+    return;
 }
 void extractOnlyTheUsefulWords(char* ptr) /// inlaturam cuvintele inutile din propozitie
 {
@@ -571,6 +481,8 @@ void extractOnlyTheUsefulWords(char* ptr) /// inlaturam cuvintele inutile din pr
         strcat(inputModified, "t");
     if (strstr(ptr, "cot"))
         strcat(inputModified, "g");
+    if (strstr(ptr, "logaritm") || strstr(ptr, "log") || strstr(ptr, "logaritmul"))
+        strcat(inputModified, "l");
     if (strstr(ptr, "("))
         strcat(inputModified, "(");
     if (strstr(ptr, ")"))
@@ -591,7 +503,8 @@ void extractOnlyTheUsefulWords(char* ptr) /// inlaturam cuvintele inutile din pr
     {
         int newNumber = charToInt(ptr);
         char changedS[200] = "";
-        IntegerIntoWord(newNumber, changedS);
+        IntegerIntoWord(newNumber, 1, changedS);
+        ///cout << changedS;
         strcat(inputModified, changedS);
     }
     //if (strstr(ptr, "?"))

@@ -5,7 +5,7 @@ int cnt1, cnt2, i, j, Numbers[101], HowManyZeros;
 bool ans = true;
 int getPriority(char current)  //functia returneaza prioritatea operatiei: 1 pt adunare si scadere, 2 pt inmultire si impartire, etc.
 {
-    if (current== 's' || current == 'c' || current == 't' || current == 'g') 
+    if (current== 's' || current == 'c' || current == 't' || current == 'g' || current == 'l') 
         return 4;
     if (current == '^')
         return 3;

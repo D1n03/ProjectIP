@@ -45,7 +45,7 @@
 1669724274 c:\users\asus\documents\github\projectip\calculatorv2\calculate.h
 	<iostream>
 
-1670005323 source:c:\users\andr_\documents\github\projectip\calculatorv2\main.cpp
+1670675497 source:c:\users\andr_\documents\github\projectip\calculatorv2\main.cpp
 	<iostream>
 	<cstring>
 	<stack>
@@ -60,12 +60,12 @@
 	<iostream>
 	<cstring>
 
-1670005477 c:\users\andr_\documents\github\projectip\calculatorv2\conv.h
+1670675368 c:\users\andr_\documents\github\projectip\calculatorv2\conv.h
 	<iostream>
 	<cstring>
 	<stack>
 	<math.h>
 
-1669821391 c:\users\andr_\documents\github\projectip\calculatorv2\calculate.h
+1670674369 c:\users\andr_\documents\github\projectip\calculatorv2\calculate.h
 	<iostream>
 

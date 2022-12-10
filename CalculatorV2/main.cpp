@@ -32,6 +32,7 @@ void WordsToNumbers()
         extractOnlyTheUsefulWords(ptr);
         ptr = strtok(NULL, sep);
     }
+    //cout << inputModified;
     /// inseram in vectorul cu codificari fiecare input modificatul
     ptr = strtok(inputModified, sep);
     while (ptr)
@@ -60,6 +61,10 @@ void WordsToNumbers()
             if (strstr(ptr, "/")) 
             { 
                 vectorCOD[i] = '/'; i++; 
+            }
+            if (strcmp(ptr, "l") == 0)
+            {
+                vectorCOD[i] = 'l'; i++;
             }
             if (strcmp(ptr, "s") == 0) 
             {
@@ -186,7 +191,7 @@ void WordsToNumbers()
                 }
                 else
                 { 
-                    vectorCOD[i] = '^'; i++; 
+                    vectorCOD[i] = '^'; i++;  
                 }
             }
             OutOfIf:
@@ -228,13 +233,15 @@ void WordsToNumbers()
         previous = 0;
         intermediate = 0;
     }
+    //for (int k = 0; k < i; k++)
+        //cout << vectorCOD[k] << " ";
 }
 /////////////////////////////////////////////////////
 /// FUNCTII PENTRU CALCULAREA INPUTULUI CONVERTIT ///
 /////////////////////////////////////////////////////
 int CalculateInputModified()
 {
-    if (vectorCOD[0] == '+' || vectorCOD[0] == '-' || vectorCOD[0] == '*' || vectorCOD[0] == '/' || vectorCOD[0] == '^')
+    if (vectorCOD[0] == '+' || vectorCOD[0] == '-' || vectorCOD[0] == '*' || vectorCOD[0] == '/')
         number = to_string(calculate());
     else {
         i = 0; j = 0;
@@ -247,7 +254,6 @@ int CalculateInputModified()
                 break; // daca ajungem la sfarsitul randului iesim din while
             if (current == ' ')  // ignorarea spatiilor
                 continue;
-
             if (current == 's') { //daca am citit functia sin
                 item.type = 's';
                 item.value = 0;
@@ -268,6 +274,13 @@ int CalculateInputModified()
             }
             if (current == 'g') { //daca am citit functia cotangenta
                 item.type = 'g';
+                item.value = 0;
+                StackOp.push(item); //operatia se insereaza in stiva cu operatii
+                continue;
+            }
+            if (current == 'l')
+            {
+                item.type = 'l';
                 item.value = 0;
                 StackOp.push(item); //operatia se insereaza in stiva cu operatii
                 continue;
@@ -493,7 +506,7 @@ TO DO:
 -Implemenetare paranteze pentru ordinea opeartiilor astefel incat sa putem aplica alte functii, numere negative
 -Implemenetare functii : cos, sin, tg, ctg, ^ (pow) (posibil log)
 -Implementare meniu (rules, start, select language)
--Implementare calculator in limba engleza
 cat scadem din 10 ca sa obtinem 3
 cat scade, scazi
+daca operatii din opeartii, neaparat paranteze suma dintre ( suma dintre ( diferenta dintre doi cu trei ), trei cu cinci ) -
 */
