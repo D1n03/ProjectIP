@@ -501,11 +501,19 @@ void extractOnlyTheUsefulWords(char* ptr) /// inlaturam cuvintele inutile din pr
     }
     if (ptr[0] >= '0' && ptr[0] <= '9')
     {
+        bool HasComma = false;
+        if (strstr(ptr, ","))
+        {
+            ptr[strlen(ptr) - 1] = '\0';
+            HasComma = true;
+        }
         int newNumber = charToInt(ptr);
         char changedS[200] = "";
         IntegerIntoWord(newNumber, 1, changedS);
         ///cout << changedS;
         strcat(inputModified, changedS);
+        if (HasComma == true)
+            strcat(inputModified, ",");
     }
     //if (strstr(ptr, "?"))
         //strcat(inputModified, "?");
