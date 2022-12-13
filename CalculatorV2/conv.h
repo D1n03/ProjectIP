@@ -21,16 +21,16 @@ double Cos(double x)
 {   //rotunjim valoarea cosinusului
     return (round(cos(x) * 100000000) / 100000000);
 }
-double ctg(double x) 
-{   //functie pt calcului cotangentei
-    double a = Cos(x);
-    double b = Sin(x);
-    return (a / b);
-}
 double tg(double x) 
 {   //functie pt calcului tangentei
     double a = Sin(x);
     double b = Cos(x);
+    return (a / b);
+}
+double ctg(double x) 
+{   //functie pt calcului cotangentei
+    double a = Cos(x);
+    double b = Sin(x);
     return (a / b);
 }
 double Log(double x) 
@@ -363,7 +363,7 @@ int charToInt(char* ptr)
 void IntegerIntoWord(int val, bool flag, char newNS[200])
 {
     char first1[20][20] = { "zero ","unu ", "doi ", "trei ","patru ","cinci ","sase ","sapte ","opt ","noua ","zece ","unsprezece ","doisprezece ","treisprezece ","paisprezece ","cincisprezece ","saisprezece ","saptesprezece ","optsprezece ","nouasprezece " };
-    char first0[20][20] = { "zero ","o ", "doua ", "trei ","patru ","cinci ","sase ","sapte ","opt ","noua ","zece ","unsprezece ","douasprezece ","treisprezece ","paisprezece ","cincisprezece ","saisprezece ","saptesprezece ","optsprezece ","nouasprezece " };
+    char first0[20][20] = { "zero ","", "doua ", "trei ","patru ","cinci ","sase ","sapte ","opt ","noua ","zece ","unsprezece ","douasprezece ","treisprezece ","paisprezece ","cincisprezece ","saisprezece ","saptesprezece ","optsprezece ","nouasprezece " };
     char second[10][20] = { " ", "zece ", "douazeci ", "treizeci ","patruzeci ","cincizeci ","saizeci ","saptezeci ","optzeci ","nouazeci " };
     if (val >= 1000000)
     {
@@ -432,7 +432,7 @@ void IntegerIntoWord(int val, bool flag, char newNS[200])
         strcat(newNS, second[val / 10]);
         if (val % 10)
         {
-            strcat(newNS, "si ");
+            //strcat(newNS, "si ");
             IntegerIntoWord(val % 10, 1, newNS);
         }
     }
@@ -501,11 +501,19 @@ void extractOnlyTheUsefulWords(char* ptr) /// inlaturam cuvintele inutile din pr
     }
     if (ptr[0] >= '0' && ptr[0] <= '9')
     {
+        bool HasComma = false;
+        if (strstr(ptr, ","))
+        {
+            ptr[strlen(ptr) - 1] = '\0';
+            HasComma = true;
+        }
         int newNumber = charToInt(ptr);
         char changedS[200] = "";
         IntegerIntoWord(newNumber, 1, changedS);
         ///cout << changedS;
         strcat(inputModified, changedS);
+        if (HasComma == true)
+            strcat(inputModified, ",");
     }
     //if (strstr(ptr, "?"))
         //strcat(inputModified, "?");

@@ -182,7 +182,6 @@ void printHundred(string s, int Start, int Final)
     for (int i = Start; i <= Final; i++)
         newS = newS + s[i];
     int new_len = newS.size();
-
     switch (new_len)
     {
         case 1:

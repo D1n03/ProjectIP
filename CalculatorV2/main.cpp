@@ -241,6 +241,34 @@ void WordsToNumbers()
 /////////////////////////////////////////////////////
 int CalculateInputModified()
 {
+    if ((vectorCOD[0] == '+' || vectorCOD[0] == '-' || vectorCOD[0] == '*' || vectorCOD[0] == '/') && (vectorCOD[1] == '+' || vectorCOD[1] == '-' || vectorCOD[1] == '*' || vectorCOD[1] == '/'))
+    {
+        char auxCOD[101] = "";
+        int p = 0, t = 2;
+        auxCOD[p] = vectorCOD[0], p++;
+        auxCOD[p] = '(', p++;
+        auxCOD[p] = vectorCOD[1], p++;
+        while (t < i)
+        {
+            if (vectorCOD[t] == 'n' || vectorCOD[t] == 's' || vectorCOD[t] == 'c' || vectorCOD[t] == 't' || vectorCOD[t] == 'g' || vectorCOD[t] == 'l')
+            {
+                while (vectorCOD[t] == 'n' || vectorCOD[t] == 's' || vectorCOD[t] == 'c' || vectorCOD[t] == 't' || vectorCOD[t] == 'g' || vectorCOD[t] == 'l')
+                    auxCOD[p] = vectorCOD[t], p++, t++;
+            }
+            else if ((vectorCOD[t] == '+' || vectorCOD[t] == '-' || vectorCOD[t] == '*' || vectorCOD[t] == '/'))
+            {
+                auxCOD[p] = ')', p++;
+                auxCOD[p] = '(', p++;
+                auxCOD[p] = vectorCOD[t], p++, t++;
+            }
+        }
+        auxCOD[p] = ')', p++;
+        i = p;
+        for (int t = 0; t < p; t++)
+            vectorCOD[t] = auxCOD[t];
+        //for (int t = 0; t < p; t++)
+            //cout << vectorCOD[t];
+    }
     if (vectorCOD[0] == '+' || vectorCOD[0] == '-' || vectorCOD[0] == '*' || vectorCOD[0] == '/')
         number = to_string(calculate());
     else {
@@ -361,14 +389,6 @@ bool verifyInteger(string s, int len)
             return false;
     return true;
 }
-/// verificam sa vedem daca exista cazul cu perioada
-bool verifyPeriod(string s, int len)
-{
-    for (int i = 0; i < len; ++i)
-        if (s[i] == '(')
-            return true;
-    return false;
-}
 ///formatam pt zero
 string formatZero(string s, int len)
 {
@@ -402,21 +422,6 @@ string formatDupaVirg(string s, int len)
         else format += s[i];
     return format;
 }
-///formatam perioada
-string formatPeriod(string s, int len)
-{
-    int pos = len;
-    string format = "";
-    for (int i = 0; i < len; ++i)
-        if (s[i] == '(')
-        {
-            pos = i + 1;
-            break;
-        }
-    for (int i = pos; i < len - 1; ++i)
-        format += s[i];
-    return format;
-}
 /// numere convertite in cuvinte
 void NumbersToWords()
 {
@@ -440,7 +445,6 @@ void NumbersToWords()
     len = len + 1;
     string IntegerNumber = changeToInteger(number, len);
     string NumberAfterComma = formatDupaVirg(number, len);
-    string period = formatPeriod(number, len);
     printNumber(IntegerNumber, IntegerNumber.size());
     if (!verifyInteger(number, len))
     {
@@ -461,28 +465,6 @@ void NumbersToWords()
             printNumber(nou, nou.size());
             NumberAfterComma.erase(0, nou.size());
             lenNumberAfterComma = NumberAfterComma.size();
-        }
-        if (verifyPeriod(number, len))
-        {
-            strcat(FinalAns, " si");
-            int lenNumberPeriod = period.size();
-            while (lenNumberPeriod)
-            {
-                string zeros = formatZero(period, period.size());
-                int lenZeros = zeros.size();
-                while (lenZeros--)
-                    strcat(FinalAns, " zero");
-                period.erase(0, zeros.size());
-                lenNumberPeriod = period.size();
-                int lenNou = min(lenNumberPeriod, 9);
-                string nou = "";
-                for (int i = 0; i < lenNou; ++i)
-                    nou += period[i];
-                printNumber(nou, nou.size());
-                period.erase(0, nou.size());
-                lenNumberPeriod = period.size();
-            }
-            strcat(FinalAns, " in perioada");
         }
     }
 }
@@ -509,4 +491,5 @@ TO DO:
 cat scadem din 10 ca sa obtinem 3
 cat scade, scazi
 daca operatii din opeartii, neaparat paranteze suma dintre ( suma dintre ( diferenta dintre doi cu trei ), trei cu cinci ) -
+in loc de paranteze sa punem virgula la cazul 1 si in loc de , punem mereu cu
 */
