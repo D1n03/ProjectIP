@@ -46,50 +46,50 @@ void WordsToNumbers()
         }
         else
         {
-            if (strstr(ptr, "+")) 
-            { 
-                vectorCOD[i] = '+'; i++; 
+            if (strstr(ptr, "+"))
+            {
+                vectorCOD[i] = '+'; i++;
             }
-            if (strstr(ptr, "-")) 
-            { 
-                vectorCOD[i] = '-'; i++; 
+            if (strstr(ptr, "-"))
+            {
+                vectorCOD[i] = '-'; i++;
             }
-            if (strstr(ptr, "*")) 
-            { 
-                vectorCOD[i] = '*'; i++; 
+            if (strstr(ptr, "*"))
+            {
+                vectorCOD[i] = '*'; i++;
             }
-            if (strstr(ptr, "/")) 
-            { 
-                vectorCOD[i] = '/'; i++; 
+            if (strstr(ptr, "/"))
+            {
+                vectorCOD[i] = '/'; i++;
             }
             if (strcmp(ptr, "l") == 0)
             {
                 vectorCOD[i] = 'l'; i++;
             }
-            if (strcmp(ptr, "s") == 0) 
+            if (strcmp(ptr, "s") == 0)
             {
-                vectorCOD[i] = 's'; i++; 
+                vectorCOD[i] = 's'; i++;
             }
-            if (strcmp(ptr, "c") == 0) 
-            { 
-                vectorCOD[i] = 'c'; i++; 
-            }
-            if (strcmp(ptr, "t") == 0) 
-            { 
-                vectorCOD[i] = 't'; i++; 
-            }
-            if (strcmp(ptr, "g") == 0) 
-            { 
-                vectorCOD[i] = 'g'; i++; 
-            }
-            if (strstr(ptr, "(")) 
+            if (strcmp(ptr, "c") == 0)
             {
-                vectorCOD[i] = '('; i++; 
+                vectorCOD[i] = 'c'; i++;
+            }
+            if (strcmp(ptr, "t") == 0)
+            {
+                vectorCOD[i] = 't'; i++;
+            }
+            if (strcmp(ptr, "g") == 0)
+            {
+                vectorCOD[i] = 'g'; i++;
+            }
+            if (strstr(ptr, "("))
+            {
+                vectorCOD[i] = '('; i++;
             }
             if (strstr(ptr, ","))
-                if (foundNumber) 
-                { 
-                    vectorCOD[i] = 'n'; i++; 
+                if (foundNumber)
+                {
+                    vectorCOD[i] = 'n'; i++;
                 }
             if (strstr(ptr, ")"))
             {
@@ -101,9 +101,9 @@ void WordsToNumbers()
                     vectorCOD[i] = 'n'; i++;
                     vectorCOD[i] = ')'; i++;
                 }
-                else 
-                { 
-                    vectorCOD[i] = ')'; i++; 
+                else
+                {
+                    vectorCOD[i] = ')'; i++;
                 }
             }
             //if (strstr(ptr, "?")) /// inainte trebuia sa fie spatiu intre numar si semnul intrebarii
@@ -181,7 +181,7 @@ void WordsToNumbers()
             {
                 if (foundNumber)
                 {
-                    vectorCOD[i] = 'n'; i++; 
+                    vectorCOD[i] = 'n'; i++;
                     vectorCOD[i] = '^'; i++;
                     goto OutOfIf;
                 }
@@ -190,8 +190,8 @@ void WordsToNumbers()
                     vectorCOD[i] = '^'; i++; VerifParantezaSemn = false; distanta = 0; goto OutOfIf; /// OutOfIf adica iesim din if si nu mai testam conditiile
                 }
                 else
-                { 
-                    vectorCOD[i] = '^'; i++;  
+                {
+                    vectorCOD[i] = '^'; i++;
                 }
             }
             OutOfIf:
@@ -239,9 +239,16 @@ void WordsToNumbers()
 /////////////////////////////////////////////////////
 /// FUNCTII PENTRU CALCULAREA INPUTULUI CONVERTIT ///
 /////////////////////////////////////////////////////
+
+bool IsOperator(char ch)
+{
+    if (vectorCOD[0] == '+' || vectorCOD[0] == '-' || vectorCOD[0] == '*' || vectorCOD[0] == '/')
+        return true;
+    else return false;
+}
 int CalculateInputModified()
 {
-    if ((vectorCOD[0] == '+' || vectorCOD[0] == '-' || vectorCOD[0] == '*' || vectorCOD[0] == '/') && (vectorCOD[1] == '+' || vectorCOD[1] == '-' || vectorCOD[1] == '*' || vectorCOD[1] == '/'))
+    if (IsOperator(vectorCOD[0]) && IsOperator(vectorCOD[1]))
     {
         char auxCOD[101] = "";
         int p = 0, t = 2;
@@ -269,7 +276,7 @@ int CalculateInputModified()
         //for (int t = 0; t < p; t++)
             //cout << vectorCOD[t];
     }
-    if (vectorCOD[0] == '+' || vectorCOD[0] == '-' || vectorCOD[0] == '*' || vectorCOD[0] == '/')
+    if (IsOperator(vectorCOD[0]))
         number = to_string(calculate());
     else {
         i = 0; j = 0;
@@ -361,7 +368,7 @@ int CalculateInputModified()
                 StackOp.pop();
                 continue;
             }
-            else 
+            else
             { //daca am citit un caracter straniu
                 break;
             }
@@ -468,8 +475,50 @@ void NumbersToWords()
         }
     }
 }
+void graphwindowINFO(int window)
+{
+    int x, y;
+    bool click = false;
+    readimagefile("Rules_and_Info.jpg", 0, 0, 800, 600);
+    do{
+        if(ismouseclick(WM_LBUTTONDOWN)){
+            clearmouseclick(WM_LBUTTONDOWN);
+            x = mousex(); 
+            y = mousey();
+            if(x > 672 && x < 786 && y > 520 && y < 583) 
+                click = true;
+        }
+    }while (!click);
+}
 int main()
 {
+    int window, x, y;
+    bool click;
+    window = initwindow(800, 600, "Calculator Romana");
+    menu:
+    readimagefile("Menu.jpg",0,0,800,600);
+    do{
+        if(ismouseclick(WM_LBUTTONDOWN)){
+            clearmouseclick(WM_LBUTTONDOWN);
+            x = mousex(); 
+            y = mousey();
+            if(x > 89 && x < 296 && y > 115 && y < 190) 
+            {
+                closegraph(window); 
+                click = true; 
+            }
+            else if(x > 83 && x < 277 && y > 263 && y < 327) 
+            {
+                graphwindowINFO(window); 
+                goto menu;
+            }
+            else if(x > 126 && x < 259 && y > 404 && y < 469)
+            {
+                closegraph(window);
+                goto closeprogram;
+            }
+        }
+    } while(!click);
     cout << "Introduceti intrebarea: ";
     cin.getline(input, 256);
     /// convertim inputul in litere mici
@@ -481,6 +530,7 @@ int main()
     /// pentru ans = true, se afiseaza rezultatul, in caz contrar, avem o eroare, cazul cu impartirea la zero
     if (ans == true)
         cout << "Rezultatul: " << FinalAns << "\n";
+    closeprogram:
     return 0;
 }
 /*
