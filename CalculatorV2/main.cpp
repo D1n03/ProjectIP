@@ -242,7 +242,7 @@ void WordsToNumbers()
 
 bool IsOperator(char ch)
 {
-    if (vectorCOD[0] == '+' || vectorCOD[0] == '-' || vectorCOD[0] == '*' || vectorCOD[0] == '/')
+    if (ch == '+' || ch == '-' || ch == '*' || ch == '/')
         return true;
     else return false;
 }
@@ -490,8 +490,31 @@ void graphwindowINFO(int window)
         }
     }while (!click);
 }
-int main()
+void reset() 
 {
+    ///din main
+    Operator = 0, previous = 0, intermediate = 0;
+    CNT = 0, inceputa = 0, distanta=0;
+    number = "";
+    foundNumber = false;
+    VerifParanteza = false, VerifParantezaSemn = false, DupaVirg = true, zero = false, raport = true;
+    ///din calculate
+    strcpy(vectorCOD, "");
+    cnt1 = 0, cnt2 = 0, i = 0, j = 0, Numbers[101] = { 0 }, HowManyZeros = 0;
+    ans = true;
+    ///din conv
+    strcpy(inputModified, "");
+    mii = 0;
+    millions = 0;
+    ///din printnum
+    strcpy(FinalAns, "");
+    while (!StackNr.empty())
+        StackNr.pop();
+    while (!StackOp.empty())
+        StackOp.pop();
+}
+int main()
+{   
     int window, x, y;
     bool click;
     window = initwindow(800, 600, "Calculator Romana");
@@ -519,17 +542,24 @@ int main()
             }
         }
     } while(!click);
-    cout << "Introduceti intrebarea: ";
-    cin.getline(input, 256);
-    /// convertim inputul in litere mici
-    for (int i = 0; i < strlen(input); i++)
-        input[i] = tolower(input[i]);
-    WordsToNumbers(); /// functie care converteste inputul
-    CalculateInputModified(); /// functie care calculeaza inputul modificat
-    NumbersToWords(); /// functie care converteste rezultatul inapoi
-    /// pentru ans = true, se afiseaza rezultatul, in caz contrar, avem o eroare, cazul cu impartirea la zero
-    if (ans == true)
-        cout << "Rezultatul: " << FinalAns << "\n";
+    cout << "Pentru a iesi din executare tastati: EXIT" << '\n';
+    while (1) 
+    {
+        cout << "Introduceti intrebarea: "<< '\n';
+        cin.getline(input, 256);
+        if (strcmp(input, "EXIT") == 0)
+            break;
+        /// convertim inputul in litere mici 
+        for (int i = 0; i < strlen(input); i++)
+            input[i] = tolower(input[i]);
+        WordsToNumbers(); /// functie care converteste inputul
+        CalculateInputModified(); /// functie care calculeaza inputul modificat
+        NumbersToWords(); /// functie care converteste rezultatul inapoi
+        /// pentru ans = true, se afiseaza rezultatul, in caz contrar, avem o eroare, cazul cu impartirea la zero
+        if (ans == true)
+            cout << "Rezultatul: " << FinalAns << '\n';
+        reset();
+    }
     closeprogram:
     return 0;
 }
