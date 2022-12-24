@@ -17,7 +17,7 @@ int getPriority(char current)  //functia returneaza prioritatea operatiei: 1 pt 
 }
 bool isFunction(char ch)
 {
-    if (vectorCOD[cnt1] == 's' || vectorCOD[cnt1] == 'c' || vectorCOD[cnt1] == 't' || vectorCOD[cnt1] == 'g' || vectorCOD[cnt1] == 'l')
+    if (ch == 's' || ch == 'c' || ch == 't' || ch == 'g' || ch == 'l')
         return true;
     else return false;
 }
