@@ -219,6 +219,7 @@ void WordsToNumbers()
         }
         ptr = strtok(NULL, sep);
     }
+    inputModified[0] = '\0';
     if (foundNumber) { vectorCOD[i] = 'n'; i++; } /// added: mereu o sa fie un numar la urma
     if (previous != 0)
         Operator += previous;
@@ -271,7 +272,7 @@ int CalculateInputModified()
         }
         auxCOD[p] = ')', p++;
         i = p;
-        for (int t = 0; t < p; t++)
+        for (int t = 0; t <= p; t++)
             vectorCOD[t] = auxCOD[t];
         //for (int t = 0; t < p; t++)
             //cout << vectorCOD[t];
@@ -483,38 +484,15 @@ void graphwindowINFO(int window)
     do{
         if(ismouseclick(WM_LBUTTONDOWN)){
             clearmouseclick(WM_LBUTTONDOWN);
-            x = mousex(); 
+            x = mousex();
             y = mousey();
-            if(x > 672 && x < 786 && y > 520 && y < 583) 
+            if(x > 672 && x < 786 && y > 520 && y < 583)
                 click = true;
         }
     }while (!click);
 }
-void reset() 
-{
-    ///din main
-    Operator = 0, previous = 0, intermediate = 0;
-    CNT = 0, inceputa = 0, distanta=0;
-    number = "";
-    foundNumber = false;
-    VerifParanteza = false, VerifParantezaSemn = false, DupaVirg = true, zero = false, raport = true;
-    ///din calculate
-    strcpy(vectorCOD, "");
-    cnt1 = 0, cnt2 = 0, i = 0, j = 0, Numbers[101] = { 0 }, HowManyZeros = 0;
-    ans = true;
-    ///din conv
-    strcpy(inputModified, "");
-    mii = 0;
-    millions = 0;
-    ///din printnum
-    strcpy(FinalAns, "");
-    while (!StackNr.empty())
-        StackNr.pop();
-    while (!StackOp.empty())
-        StackOp.pop();
-}
 int main()
-{   
+{
     int window, x, y;
     bool click;
     window = initwindow(800, 600, "Calculator Romana");
@@ -523,16 +501,16 @@ int main()
     do{
         if(ismouseclick(WM_LBUTTONDOWN)){
             clearmouseclick(WM_LBUTTONDOWN);
-            x = mousex(); 
+            x = mousex();
             y = mousey();
-            if(x > 89 && x < 296 && y > 115 && y < 190) 
+            if(x > 89 && x < 296 && y > 115 && y < 190)
             {
-                closegraph(window); 
-                click = true; 
+                closegraph(window);
+                click = true;
             }
-            else if(x > 83 && x < 277 && y > 263 && y < 327) 
+            else if(x > 83 && x < 277 && y > 263 && y < 327)
             {
-                graphwindowINFO(window); 
+                graphwindowINFO(window);
                 goto menu;
             }
             else if(x > 126 && x < 259 && y > 404 && y < 469)
@@ -542,34 +520,17 @@ int main()
             }
         }
     } while(!click);
-    cout << "Pentru a iesi din executare tastati: EXIT" << '\n';
-    while (1) 
-    {
-        cout << "Introduceti intrebarea: "<< '\n';
-        cin.getline(input, 256);
-        if (strcmp(input, "EXIT") == 0)
-            break;
-        /// convertim inputul in litere mici 
-        for (int i = 0; i < strlen(input); i++)
-            input[i] = tolower(input[i]);
-        WordsToNumbers(); /// functie care converteste inputul
-        CalculateInputModified(); /// functie care calculeaza inputul modificat
-        NumbersToWords(); /// functie care converteste rezultatul inapoi
-        /// pentru ans = true, se afiseaza rezultatul, in caz contrar, avem o eroare, cazul cu impartirea la zero
-        if (ans == true)
-            cout << "Rezultatul: " << FinalAns << '\n';
-        reset();
-    }
+    cout << "Introduceti intrebarea: "<< '\n';
+    cin.getline(input, 256);
+    /// convertim inputul in litere mici
+    for (int i = 0; i < strlen(input); i++)
+        input[i] = tolower(input[i]);
+    WordsToNumbers(); /// functie care converteste inputul
+    CalculateInputModified(); /// functie care calculeaza inputul modificat
+    NumbersToWords(); /// functie care converteste rezultatul in cuvinte
+    /// pentru ans = true, se afiseaza rezultatul, in caz contrar, avem o eroare, cazul cu impartirea la zero
+    if (ans == true)
+        cout << "Rezultatul: " << FinalAns << '\n';
     closeprogram:
     return 0;
 }
-/*
-TO DO:
--Implemenetare paranteze pentru ordinea opeartiilor astefel incat sa putem aplica alte functii, numere negative
--Implemenetare functii : cos, sin, tg, ctg, ^ (pow) (posibil log)
--Implementare meniu (rules, start, select language)
-cat scadem din 10 ca sa obtinem 3
-cat scade, scazi
-daca operatii din opeartii, neaparat paranteze suma dintre ( suma dintre ( diferenta dintre doi cu trei ), trei cu cinci ) -
-in loc de paranteze sa punem virgula la cazul 1 si in loc de , punem mereu cu
-*/

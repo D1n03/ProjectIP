@@ -13,27 +13,27 @@ struct codification
     double value; /// 0 -> operatii, valoare pt numere
 };
 //functiile sin, cos, tg, ctg
-double Sin(double x) 
+double Sin(double x)
 {   //rotunjim valoarea sinusului
     return (round(sin(x) * 100000000) / 100000000);
 }
-double Cos(double x) 
+double Cos(double x)
 {   //rotunjim valoarea cosinusului
     return (round(cos(x) * 100000000) / 100000000);
 }
-double tg(double x) 
+double tg(double x)
 {   //functie pt calcului tangentei
     double a = Sin(x);
     double b = Cos(x);
     return (a / b);
 }
-double ctg(double x) 
+double ctg(double x)
 {   //functie pt calcului cotangentei
     double a = Cos(x);
     double b = Sin(x);
     return (a / b);
 }
-double Log(double x) 
+double Log(double x)
 {   //functie pt caclului log
     return(round(log(x) * 100000000) / 100000000);
 }

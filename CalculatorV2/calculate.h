@@ -5,7 +5,7 @@ int cnt1, cnt2, i, j, Numbers[101], HowManyZeros;
 bool ans = true;
 int getPriority(char current)  //functia returneaza prioritatea operatiei: 1 pt adunare si scadere, 2 pt inmultire si impartire, etc.
 {
-    if (current == 's' || current == 'c' || current == 't' || current == 'g' || current == 'l') 
+    if (current == 's' || current == 'c' || current == 't' || current == 'g' || current == 'l')
         return 4;
     if (current == '^')
         return 3;
@@ -96,7 +96,7 @@ double calculate()
                 cnt2++;
                 if (isFunction(vectorCOD[cnt1]))
                     goto Funct1;
-                OutOfSum:  // iesirea din suma 
+                OutOfSum:  // iesirea din suma
                 while (vectorCOD[cnt1] == 'n')
                 {
                     nr += Numbers[cnt2];
@@ -156,7 +156,7 @@ double calculate()
                 cnt2++;
                 if (isFunction(vectorCOD[cnt1]))
                     goto Funct2;
-                OutOfDif:  // iesirea din suma 
+                OutOfDif:  // iesirea din suma
                 while (vectorCOD[cnt1] == 'n')
                 {
                     nr -= Numbers[cnt2];
@@ -219,7 +219,7 @@ double calculate()
                 cnt2++;
                 if (isFunction(vectorCOD[cnt1]))
                     goto Funct3;
-                OutOfProd:  // iesirea din produs 
+                OutOfProd:  // iesirea din produs
                 while (vectorCOD[cnt1] == 'n')
                 {
                     nr *= Numbers[cnt2];
@@ -265,7 +265,7 @@ double calculate()
                         HowManyZeros++;
                     }
                     nr /= calculateFunction(vectorCOD[cnt1], Numbers[cnt2]);
-                }   
+                }
                 cnt1 += 2;
                 cnt2++;
                 if (vectorCOD[cnt1] == 'n')
@@ -325,7 +325,7 @@ double calculate()
                     cnt1++;
                     nr = calculate();
                     first = false;
-                    goto FirstElemDiv; // sarim direct la primul element din impartire 
+                    goto FirstElemDiv; // sarim direct la primul element din impartire
                 }
                 cnt1++;
                 res_divison = calculate();
@@ -378,7 +378,7 @@ double calculate()
                 cnt2++;
                 if (isFunction(vectorCOD[cnt1]))
                     goto Funct5;
-                OutOfPow:  // iesirea din suma 
+                OutOfPow:  // iesirea din suma
                 while (vectorCOD[cnt1] == 'n')
                 {
                     nr = pow(nr, Numbers[cnt2]);
