@@ -21,7 +21,7 @@
 1669555923 d:\uaic stuff\introducere in programare\proiect all versions\calculatorv2\calculate.h
 	<iostream>
 
-1671895685 source:c:\users\asus\documents\github\projectip\calculatorv2\main.cpp
+1672167038 source:c:\users\asus\documents\github\projectip\calculatorv2\main.cpp
 	<iostream>
 	<cstring>
 	<stack>
@@ -32,17 +32,17 @@
 	"conv.h"
 	"calculate.h"
 
-1671890844 c:\users\asus\documents\github\projectip\calculatorv2\printnum.h
+1672163433 c:\users\asus\documents\github\projectip\calculatorv2\printnum.h
 	<iostream>
 	<cstring>
 
-1671890838 c:\users\asus\documents\github\projectip\calculatorv2\conv.h
+1672165742 c:\users\asus\documents\github\projectip\calculatorv2\conv.h
 	<iostream>
 	<cstring>
 	<stack>
 	<math.h>
 
-1671890841 c:\users\asus\documents\github\projectip\calculatorv2\calculate.h
+1672165650 c:\users\asus\documents\github\projectip\calculatorv2\calculate.h
 	<iostream>
 
 1670675497 source:c:\users\andr_\documents\github\projectip\calculatorv2\main.cpp

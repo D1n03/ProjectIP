@@ -3,7 +3,7 @@
 #include <stack>
 #include <math.h>
 using namespace std;
-char inputModified[256] = "", sep[] = " ";
+char inputModified[NMAX] = "", sep[] = " ";
 bool mii = 0;
 bool millions = 0;
 /// struct in care codificam operatiile

@@ -8,7 +8,7 @@
 #include "conv.h"
 #include "calculate.h"
 using namespace std;
-char input[256], * ptr;
+char input[NMAX], * ptr;
 int Operator = 0, previous = 0, intermediate = 0;
 int CNT, inceputa, distanta;
 string number;
@@ -32,7 +32,6 @@ void WordsToNumbers()
         extractOnlyTheUsefulWords(ptr);
         ptr = strtok(NULL, sep);
     }
-    //cout << inputModified;
     /// inseram in vectorul cu codificari fiecare input modificatul
     ptr = strtok(inputModified, sep);
     while (ptr)
@@ -219,7 +218,7 @@ void WordsToNumbers()
         }
         ptr = strtok(NULL, sep);
     }
-    inputModified[0] = '\0';
+    //inputModified[0] = '\0';
     if (foundNumber) { vectorCOD[i] = 'n'; i++; } /// added: mereu o sa fie un numar la urma
     if (previous != 0)
         Operator += previous;
@@ -234,8 +233,6 @@ void WordsToNumbers()
         previous = 0;
         intermediate = 0;
     }
-    //for (int k = 0; k < i; k++)
-        //cout << vectorCOD[k] << " ";
 }
 /////////////////////////////////////////////////////
 /// FUNCTII PENTRU CALCULAREA INPUTULUI CONVERTIT ///
@@ -251,7 +248,7 @@ int CalculateInputModified()
 {
     if (IsOperator(vectorCOD[0]) && IsOperator(vectorCOD[1]))
     {
-        char auxCOD[101] = "";
+        char auxCOD[NMAX] = "";
         int p = 0, t = 2;
         auxCOD[p] = vectorCOD[0], p++;
         auxCOD[p] = '(', p++;
@@ -272,10 +269,8 @@ int CalculateInputModified()
         }
         auxCOD[p] = ')', p++;
         i = p;
-        for (int t = 0; t <= p; t++)
+        for (int t = 0; t < p; t++)
             vectorCOD[t] = auxCOD[t];
-        //for (int t = 0; t < p; t++)
-            //cout << vectorCOD[t];
     }
     if (IsOperator(vectorCOD[0]))
         number = to_string(calculate());
@@ -491,6 +486,35 @@ void graphwindowINFO(int window)
         }
     }while (!click);
 }
+void reset()
+{
+    // main
+    Operator = 0, previous = 0, intermediate = 0;
+    CNT = 0, inceputa = 0, distanta = 0;
+    number.clear();
+    foundNumber = false;
+    VerifParanteza = false, VerifParantezaSemn = false, DupaVirg = true, zero = false, raport = true;
+    // calculate
+    for (int w = 0; w < NMAX; w++)
+        vectorCOD[w] = 0;
+    //strcpy(vectorCOD, "");
+    for (int w = 0; w < NMAX; w++)
+        inputModified[w] = 0;
+    ///strcpy(inputModified, "");
+    cnt1 = 0, cnt2 = 0, i = 0, j = 0, HowManyZeros = 0;
+    for (int p = 0; p < NMAX; p++)
+        Numbers[p] = 0;
+    ans = true;
+    // conv
+    mii = 0;
+    millions = 0;
+    // printnum
+    FinalAns[0] = '\0';
+    while (!StackNr.empty())
+        StackNr.pop();
+    while (!StackOp.empty())
+        StackOp.pop();
+}
 int main()
 {
     int window, x, y;
@@ -520,17 +544,24 @@ int main()
             }
         }
     } while(!click);
-    cout << "Introduceti intrebarea: "<< '\n';
-    cin.getline(input, 256);
-    /// convertim inputul in litere mici
-    for (int i = 0; i < strlen(input); i++)
-        input[i] = tolower(input[i]);
-    WordsToNumbers(); /// functie care converteste inputul
-    CalculateInputModified(); /// functie care calculeaza inputul modificat
-    NumbersToWords(); /// functie care converteste rezultatul in cuvinte
-    /// pentru ans = true, se afiseaza rezultatul, in caz contrar, avem o eroare, cazul cu impartirea la zero
-    if (ans == true)
-        cout << "Rezultatul: " << FinalAns << '\n';
+    cout << "Pentru a iesi din program tastati: EXIT" << '\n';
+    while (true)
+    {
+        cout << "Introduceti intrebarea: ";
+        cin.getline(input, NMAX);
+        if (strcmp(input, "EXIT") == 0)
+            break;
+        /// convertim inputul in litere mici
+        for (int i = 0; i < strlen(input); i++)
+            input[i] = tolower(input[i]);
+        WordsToNumbers(); /// functie care converteste inputul
+        CalculateInputModified(); /// functie care calculeaza inputul modificat
+        NumbersToWords(); /// functie care converteste rezultatul inapoi
+        /// pentru ans = true, se afiseaza rezultatul, in caz contrar, avem o eroare, cazul cu impartirea la zero
+        if (ans == true)
+            cout << "Rezultatul: " << FinalAns << '\n';
+        reset();
+    }
     closeprogram:
     return 0;
 }

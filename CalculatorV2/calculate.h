@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
-char vectorCOD[101] = "";
-int cnt1, cnt2, i, j, Numbers[101], HowManyZeros;
+char vectorCOD[NMAX] = "";
+int cnt1, cnt2, i, j, Numbers[NMAX], HowManyZeros;
 bool ans = true;
 int getPriority(char current)  //functia returneaza prioritatea operatiei: 1 pt adunare si scadere, 2 pt inmultire si impartire, etc.
 {
@@ -272,7 +272,7 @@ double calculate()
                     goto OutOfDiv;
                 while (isFunction(vectorCOD[cnt1]))
                 {
-                    if (calculateFunction(vectorCOD[cnt1], Numbers[cnt2]) == 0 && HowManyZeros == 0)
+                    if (calculateFunction(vectorCOD[cnt1], Numbers[cnt2]) == 0 /*&& HowManyZeros == 0*/)
                     {
                         cout << "Nu este posibila impartirea la 0";
                         ans = false;
@@ -311,6 +311,7 @@ double calculate()
                         ans = false;
                         HowManyZeros++;
                     }
+                    nr /= Numbers[cnt2];
                     cnt1++;
                     cnt2++;
                     if (isFunction(vectorCOD[cnt1]))
@@ -320,7 +321,7 @@ double calculate()
             //return nr;
             if (vectorCOD[cnt1] == '(')
             {
-                if (nr == -1 && first)
+                if (nr == -1e9 && first)
                 {
                     cnt1++;
                     nr = calculate();
