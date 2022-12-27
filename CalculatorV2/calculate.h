@@ -311,6 +311,7 @@ double calculate()
                         ans = false;
                         HowManyZeros++;
                     }
+                    nr /= Numbers[cnt2];
                     cnt1++;
                     cnt2++;
                     if (isFunction(vectorCOD[cnt1]))
