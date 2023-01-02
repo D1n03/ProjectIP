@@ -4,18 +4,18 @@
 #include <math.h>
 #include <graphics.h>
 #include <winbgim.h>
-#include "printnum.h"
 #include "conv.h"
 #include "calculate.h"
+#include "printnum.h"
 using namespace std;
 char input[NMAX], * ptr;
 int Operator = 0, previous = 0, intermediate = 0;
-int CNT, inceputa, distanta;
+int CNT, inceputa, dist;
 string number;
 bool foundNumber = false;
-bool VerifParanteza = false, VerifParantezaSemn = false, DupaVirg = true, zero, raport = true;
+bool VerifParenthesis = false, VerifParenthesisSign = false, AfterComma = true, zero, raport = true;
 stack < codification > StackNr; // stiva pentru numere
-stack < codification > StackOp; // stiva pentru opeartii
+stack < codification > StackOp; // stiva pentru operatii
 codification item;
 ////////////////////////////////////////////////////////////
 ///FUNCTII PENTRU CONVERTIREA INPUTULUI PENTRU PRELUCRARE///
@@ -92,9 +92,9 @@ void WordsToNumbers()
                 }
             if (strstr(ptr, ")"))
             {
-                VerifParanteza = true;
-                VerifParantezaSemn = true;
-                distanta = 1;
+                VerifParenthesis = true;
+                VerifParenthesisSign = true;
+                dist = 1;
                 if (foundNumber)
                 {
                     vectorCOD[i] = 'n'; i++;
@@ -107,7 +107,6 @@ void WordsToNumbers()
             }
             //if (strstr(ptr, "?")) /// inainte trebuia sa fie spatiu intre numar si semnul intrebarii
                 //if (foundNumber) { vectorCOD[i] = 'n'; i++; }
-            ///DE MODIF DE AICI
             if (strstr(ptr, "plus"))
             {
                 if (foundNumber)
@@ -115,14 +114,15 @@ void WordsToNumbers()
                     vectorCOD[i] = 'n'; i++;
                     vectorCOD[i] = '+'; i++;
                 }
-                if (VerifParantezaSemn && distanta == 1)
+                if (VerifParenthesisSign && dist == 1)
                 {
                     vectorCOD[i] = '+'; i++;
-                    VerifParantezaSemn = false; distanta = 0;
+                    VerifParenthesisSign = false;
+                    dist = 0;
                 }
-                else if (distanta > 2)
+                else if (dist > 2)
                 {
-                    distanta = 0; VerifParantezaSemn = false;
+                    dist = 0; VerifParenthesisSign = false;
                 }
             }
             if (strstr(ptr, "minus"))
@@ -132,14 +132,16 @@ void WordsToNumbers()
                     vectorCOD[i] = 'n'; i++;
                     vectorCOD[i] = '-'; i++;
                 }
-                if (VerifParantezaSemn && distanta == 1)
+                if (VerifParenthesisSign && dist == 1)
                 {
                     vectorCOD[i] = '-'; i++;
-                    VerifParantezaSemn = false; distanta = 0;
+                    VerifParenthesisSign = false;
+                    dist = 0;
                 }
-                else if (distanta > 2)
+                else if (dist > 2)
                 {
-                    distanta = 0; VerifParantezaSemn = false;
+                    dist = 0;
+                    VerifParenthesisSign = false;
                 }
             }
             if (strstr(ptr, "ori"))
@@ -149,14 +151,16 @@ void WordsToNumbers()
                     vectorCOD[i] = 'n'; i++;
                     vectorCOD[i] = '*'; i++;
                 }
-                if (VerifParantezaSemn && distanta == 1)
+                if (VerifParenthesisSign && dist == 1)
                 {
                     vectorCOD[i] = '*'; i++;
-                    VerifParantezaSemn = false; distanta = 0;
+                    VerifParenthesisSign = false;
+                    dist = 0;
                 }
-                else if (distanta > 2)
+                else if (dist > 2)
                 {
-                    distanta = 0; VerifParantezaSemn = false;
+                    dist = 0;
+                    VerifParenthesisSign = false;
                 }
             }
             if (strstr(ptr, "impartit"))
@@ -166,14 +170,16 @@ void WordsToNumbers()
                     vectorCOD[i] = 'n'; i++;
                     vectorCOD[i] = '/'; i++;
                 }
-                if (VerifParantezaSemn && distanta == 1)
+                if (VerifParenthesisSign && dist == 1)
                 {
                     vectorCOD[i] = '/'; i++;
-                    VerifParantezaSemn = false; distanta = 0;
+                    VerifParenthesisSign = false;
+                    dist = 0;
                 }
-                else if (distanta > 2)
+                else if (dist > 2)
                 {
-                    distanta = 0; VerifParantezaSemn = false;
+                    dist = 0;
+                    VerifParenthesisSign = false;
                 }
             }
             if (strstr(ptr, "^"))
@@ -184,9 +190,12 @@ void WordsToNumbers()
                     vectorCOD[i] = '^'; i++;
                     goto OutOfIf;
                 }
-                if (VerifParantezaSemn && distanta == 1)
+                if (VerifParenthesisSign && dist == 1)
                 {
-                    vectorCOD[i] = '^'; i++; VerifParantezaSemn = false; distanta = 0; goto OutOfIf; /// OutOfIf adica iesim din if si nu mai testam conditiile
+                    vectorCOD[i] = '^'; i++;
+                    VerifParenthesisSign = false;
+                    dist = 0;
+                    goto OutOfIf; /// cand iesim din if si nu mai trecem prin conditii
                 }
                 else
                 {
@@ -196,11 +205,11 @@ void WordsToNumbers()
             OutOfIf:
             if (strstr(ptr, "cu"))
             {
-                if (VerifParanteza) goto SkipPar; ///SkipPar adica omitem paranteza
+                if (VerifParenthesis) goto SkipPar; /// trecem peste paranteza
                 if (foundNumber) { vectorCOD[i] = 'n'; i++; }
             }
             SkipPar:
-            VerifParanteza=false;
+            VerifParenthesis=false;
             foundNumber = false;
             if (previous != 0)
                 Operator += previous;
@@ -218,7 +227,6 @@ void WordsToNumbers()
         }
         ptr = strtok(NULL, sep);
     }
-    //inputModified[0] = '\0';
     if (foundNumber) { vectorCOD[i] = 'n'; i++; } /// added: mereu o sa fie un numar la urma
     if (previous != 0)
         Operator += previous;
@@ -277,30 +285,30 @@ int CalculateInputModified()
     else {
         i = 0; j = 0;
         char current; //variabila in care se inscrie caracterul curent prelucrat
-        double value; // valoarea
+        double value; // valoarea, adica numarul in sine
         while (true)
         {
             current = vectorCOD[i]; i++; // verificam primul simbol
             if (current == '\n')
-                break; // daca ajungem la sfarsitul randului iesim din while
-            if (current == ' ')  // ignorarea spatiilor
+                break; // daca ajungem la finalul randului iesim din while
+            if (current == ' ')  // ignoram spatiile
                 continue;
-            if (current == 's') { //daca am citit functia sin
+            if (current == 's') { //functia sin
                 item.type = 's';
                 item.value = 0;
                 StackOp.push(item); //operatia se insereaza in stiva cu operatii
                 continue;
             }
-            if (current == 'c') { //daca am citit functia cos
+            if (current == 'c') { //functia cos
                 item.type = 'c';
                 item.value = 0;
-                StackOp.push(item); //operatia se insereaza in stiva cu operatii
+                StackOp.push(item);
                 continue;
             }
-            if (current == 't') { //daca am citit functia tangenta
+            if (current == 't') { //functia tangenta
                 item.type = 't';
                 item.value = 0;
-                StackOp.push(item); //operatia se insereaza in stiva cu operatii
+                StackOp.push(item);
                 continue;
             }
             if (current == 'g') { //daca am citit functia cotangenta
@@ -356,7 +364,6 @@ int CalculateInputModified()
             if (current == ')') { //daca am citit paranteza inchisa
                 while (StackOp.top().type != '(') {
                     if (CalculateInStack(StackNr, StackOp, item) == false) { //daca functia returneaza 'false' incetam calculul
-                        system("pause");
                         return 0;
                     }
                     else continue; //daca totul e bine
@@ -398,7 +405,8 @@ string formatZero(string s, int len)
     string format = "";
     for (int i = 0; i < s.size(); ++i)
     {
-        if (s[i] != '0') break;
+        if (s[i] != '0')
+            break;
         else format += s[i];
     }
     return format;
@@ -415,13 +423,14 @@ string changeToInteger(string s, int len)
         else format += s[i];
 }
 ///formatam dupa virgula
-string formatDupaVirg(string s, int len)
+string formatAfterComma(string s, int len)
 {
     string formatAux = changeToInteger(s, len);
     int integerLength = formatAux.size();
     string format = "";
     for (int i = integerLength + 1; i < len; ++i)
-        if (s[i] == '(') return format;
+        if (s[i] == '(')
+            return format;
         else format += s[i];
     return format;
 }
@@ -447,7 +456,7 @@ void NumbersToWords()
     Virg:
     len = len + 1;
     string IntegerNumber = changeToInteger(number, len);
-    string NumberAfterComma = formatDupaVirg(number, len);
+    string NumberAfterComma = formatAfterComma(number, len);
     printNumber(IntegerNumber, IntegerNumber.size());
     if (!verifyInteger(number, len))
     {
@@ -461,12 +470,12 @@ void NumbersToWords()
                 strcat(FinalAns, " zero");
             NumberAfterComma.erase(0, zeros.size());
             lenNumberAfterComma = NumberAfterComma.size();
-            int lenNou = min(lenNumberAfterComma, 9);
-            string nou = "";
-            for (int i = 0; i < lenNou; ++i)
-                nou += NumberAfterComma[i];
-            printNumber(nou, nou.size());
-            NumberAfterComma.erase(0, nou.size());
+            int lenNew = min(lenNumberAfterComma, 9);
+            string newStr = "";
+            for (int i = 0; i < lenNew; ++i)
+                newStr += NumberAfterComma[i];
+            printNumber(newStr, newStr.size());
+            NumberAfterComma.erase(0, newStr.size());
             lenNumberAfterComma = NumberAfterComma.size();
         }
     }
@@ -490,10 +499,10 @@ void reset()
 {
     // main
     Operator = 0, previous = 0, intermediate = 0;
-    CNT = 0, inceputa = 0, distanta = 0;
+    CNT = 0, inceputa = 0, dist = 0;
     number.clear();
     foundNumber = false;
-    VerifParanteza = false, VerifParantezaSemn = false, DupaVirg = true, zero = false, raport = true;
+    VerifParenthesis = false, VerifParenthesisSign = false, AfterComma = true, zero = false, raport = true;
     // calculate
     for (int w = 0; w < NMAX; w++)
         vectorCOD[w] = 0;
@@ -506,7 +515,7 @@ void reset()
         Numbers[p] = 0;
     ans = true;
     // conv
-    mii = 0;
+    thousands = 0;
     millions = 0;
     // printnum
     FinalAns[0] = '\0';
@@ -557,10 +566,10 @@ int main()
         WordsToNumbers(); /// functie care converteste inputul
         CalculateInputModified(); /// functie care calculeaza inputul modificat
         NumbersToWords(); /// functie care converteste rezultatul inapoi
-        /// pentru ans = true, se afiseaza rezultatul, in caz contrar, avem o eroare, cazul cu impartirea la zero
+        /// pentru ans = true, se afiseaza rezultatul, in caz contrar, avem o eroare, cazul cu impartirea la zero etc.
         if (ans == true)
             cout << "Rezultatul: " << FinalAns << '\n';
-        reset();
+        reset(); /// functie care reseteaza variabilele si structurile de date principale; ne permite mai multe inputuri in consola
     }
     closeprogram:
     return 0;

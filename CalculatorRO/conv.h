@@ -3,8 +3,9 @@
 #include <stack>
 #include <math.h>
 using namespace std;
+const int NMAX = 1000;
 char inputModified[NMAX] = "", sep[] = " ";
-bool mii = 0;
+bool thousands = 0;
 bool millions = 0;
 /// struct in care codificam operatiile
 struct codification
@@ -21,13 +22,13 @@ double Cos(double x)
 {   //rotunjim valoarea cosinusului
     return (round(cos(x) * 100000000) / 100000000);
 }
-double tg(double x)
+double Tan(double x)
 {   //functie pt calcului tangentei
     double a = Sin(x);
     double b = Cos(x);
     return (a / b);
 }
-double ctg(double x)
+double Cot(double x)
 {   //functie pt calcului cotangentei
     double a = Cos(x);
     double b = Sin(x);
@@ -117,7 +118,7 @@ bool CalculateInStack(stack < codification >& StackNr, stack < codification >& S
             return false;
         }
         else {
-            Rez = tg(Nr1);
+            Rez = Tan(Nr1);
             item.type = '0';
             item.value = Rez;
             StackNr.push(item);
@@ -130,7 +131,7 @@ bool CalculateInStack(stack < codification >& StackNr, stack < codification >& S
             return false;
         }
         else {
-            Rez = ctg(Nr1);
+            Rez = Cot(Nr1);
             item.type = '0';
             item.value = Rez;
             StackNr.push(item);
@@ -391,19 +392,19 @@ void IntegerIntoWord(int val, bool flag, char newNS[200])
     {
         if (val >= 1000 && val < 2000)
         {
-            mii = 1;
+            thousands = 1;
             IntegerIntoWord(val / 1000, 0, newNS);
             strcat(newNS, "mie ");
-            mii = 0;
+            thousands = 0;
         }
         else
         {
-            mii = 1;
+            thousands = 1;
             IntegerIntoWord(val / 1000, 0, newNS);
             //if ((val / 10000) % 10 >= 2 || (val / 1000) % 100 == 0)
                 //strcat(newNS, "de ");
             strcat(newNS, "mii ");
-            mii = 0;
+            thousands = 0;
         }
         if (val % 1000)
         {
@@ -438,7 +439,7 @@ void IntegerIntoWord(int val, bool flag, char newNS[200])
     }
     else
     {
-        if (mii == 1 || millions == 1)
+        if (thousands == 1 || millions == 1)
         {
             strcat(newNS, first0[val]);
         }
@@ -519,3 +520,4 @@ void extractOnlyTheUsefulWords(char* ptr) /// inlaturam cuvintele inutile din pr
         //strcat(inputModified, "?");
     strcat(inputModified, sep);
 }
+

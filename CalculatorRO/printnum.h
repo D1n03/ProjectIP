@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstring>
 using namespace std;
-const int NMAX = 1000;
 char FinalAns[NMAX] = "";
 void printDigit(string s, int Start, int Final)
 {
@@ -364,3 +363,4 @@ void printNumber(string s, int len)
             break;
     }
 }
+

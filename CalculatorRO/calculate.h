@@ -32,10 +32,10 @@ double calculateFunction(char op, double x)
             return Cos(x);
         break;
         case 't':
-            return tg(x);
+            return Tan(x);
         break;
         case 'g':
-            return ctg(x);
+            return Cot(x);
         break;
         case 'l':
             return Log(x);
@@ -75,18 +75,6 @@ double calculate()
                         goto OutOfSum;
                 }
             }
-            /*
-            if (vectorCOD[cnt1] == 'c')
-            {
-                while (vectorCOD[cnt1] == 'c')
-                {
-                    if (nr == -1e9)
-                        nr = Cos(Numbers[cnt2]);
-                    else nr += Cos(Numbers[cnt2]);
-                    cnt1 += 2;
-                    cnt2++;
-                }
-            }*/
             if (vectorCOD[cnt1] == 'n')
             {
                 if (nr == -1e9)
@@ -260,7 +248,7 @@ double calculate()
                 {
                     if(calculateFunction(vectorCOD[cnt1], Numbers[cnt2]) == 0)
                     {
-                        cout << "Nu este posibila impartirea la 0";
+                        cout << "Nu este posibila impartirea la 0" << "\n";
                         ans = false;
                         HowManyZeros++;
                     }
@@ -274,7 +262,7 @@ double calculate()
                 {
                     if (calculateFunction(vectorCOD[cnt1], Numbers[cnt2]) == 0 /*&& HowManyZeros == 0*/)
                     {
-                        cout << "Nu este posibila impartirea la 0";
+                        cout << "Nu este posibila impartirea la 0" << "\n";
                         ans = false;
                         HowManyZeros++;
                     }
@@ -292,7 +280,7 @@ double calculate()
                 else {
                     if (Numbers[cnt2] == 0 && HowManyZeros == 0)
                     {
-                        cout << "Nu este posibila impartirea la 0";
+                        cout << "Nu este posibila impartirea la 0" << "\n";
                         ans = false;
                         HowManyZeros++;
                     }
@@ -307,7 +295,7 @@ double calculate()
                 {
                     if (Numbers[cnt2] == 0 && HowManyZeros == 0)
                     {
-                        cout << "Nu este posibila impartirea la 0";
+                        cout << "Nu este posibila impartirea la 0" << "\n";
                         ans = false;
                         HowManyZeros++;
                     }
@@ -332,7 +320,7 @@ double calculate()
                 res_divison = calculate();
                 if (res_divison == 0 && first == false && HowManyZeros == 0)
                 {
-                    cout << "Nu este posibila impartirea la 0";
+                    cout << "Nu este posibila impartirea la 0" << "\n";
                     ans = false;
                     HowManyZeros++;
                 }
@@ -412,3 +400,4 @@ double calculate()
         }
     }
 }
+
