@@ -287,7 +287,7 @@ int CalculateInputModified()
         number = to_string(calculate());
     else {
         i = 0; j = 0;
-        char current; //variabila in care se inscrie caracterul curent prelucrat
+        char current; //variabila in care se retine caracterul curent prelucrat/convertit
         double value; // valoarea, adica numarul in sine
         while (true)
         {
@@ -317,14 +317,14 @@ int CalculateInputModified()
             if (current == 'g') { //daca am citit functia cotangenta
                 item.type = 'g';
                 item.value = 0;
-                StackOp.push(item); //operatia se insereaza in stiva cu operatii
+                StackOp.push(item); 
                 continue;
             }
             if (current == 'l')
             {
                 item.type = 'l';
                 item.value = 0;
-                StackOp.push(item); //operatia se insereaza in stiva cu operatii
+                StackOp.push(item); 
                 continue;
             }
             if (current == 'n') { // daca am citit un numar
@@ -338,17 +338,17 @@ int CalculateInputModified()
                 if (StackOp.size() == 0) { // daca stiva cu operatii este vida
                     item.type = current;
                     item.value = 0;
-                    StackOp.push(item); // operatia se insereaza in stiva cu operatii
+                    StackOp.push(item); 
                     continue;
                 }
                 if (StackOp.size() != 0 && getPriority(current) > getPriority(StackOp.top().type)) { // daca stiva nu este vida, insa prioritatea operatiei curente este mai mare decat cea din varful stivei
                     item.type = current;
                     item.value = 0;
-                    StackOp.push(item); // operatia se insereaza in stiva cu operatii
+                    StackOp.push(item); 
                     continue;
                 }
                 if (StackOp.size() != 0 && getPriority(current) <= getPriority(StackOp.top().type)) { // daca stiva nu este vida, insa prioritatea operatiei curente e mai mica sau egala cu cea din varful stivei
-                    if (CalculateInStack(StackNr, StackOp, item) == false) { // daca funtia returneaza 'false' incetam lucrul
+                    if (CalculateInStack(StackNr, StackOp, item) == false) { // daca funtia returneaza false false ne oprim
                         system("pause");
                         return 0;
                     }
@@ -366,10 +366,10 @@ int CalculateInputModified()
             }
             if (current == ')') { //daca am citit paranteza inchisa
                 while (StackOp.top().type != '(') {
-                    if (CalculateInStack(StackNr, StackOp, item) == false) { //daca functia returneaza 'false' incetam calculul
+                    if (CalculateInStack(StackNr, StackOp, item) == false) { //daca functia returneaza false ne oprim
                         return 0;
                     }
-                    else continue; //daca totul e bine
+                    else continue; //mergem mai departe daca totul este in regula
                 }
                 StackOp.pop();
                 continue;
@@ -379,14 +379,13 @@ int CalculateInputModified()
                 break;
             }
         }
-        while (StackOp.size() != 0) //apelam functia matematica pana cand in stiva cu operatii nu raman 0 elemente
+        while (StackOp.size() != 0) //cat timp in stiva de operatii mai avem elemente facem operaiile 
         {
-            if (CalculateInStack(StackNr, StackOp, item) == false) //daca functia returneaza 'false' incetam calculul
+            if (CalculateInStack(StackNr, StackOp, item) == false) //daca functia returneaza false ne oprim
             {
-                system("pause");
                 return 0;
             }
-            else continue; //daca totul e bine
+            else continue; //mergem mai departe daca totul este in regula
         }
         number = to_string(StackNr.top().value);
     }
@@ -485,7 +484,7 @@ void NumbersToWords()
 }
 void graphwindowINFO(int window)
 {
-    int x, y;
+    int x, y; // fereastra pentru reguli
     bool click = false;
     readimagefile("Rules_and_Info.jpg", 0, 0, 800, 600);
     do{
@@ -529,7 +528,7 @@ void reset()
 }
 int main()
 {
-    int window, x, y;
+    int window, x, y; //meniu
     bool click;
     window = initwindow(800, 600, "Calculator Romana");
     menu:
