@@ -10,7 +10,7 @@
 using namespace std;
 char input[NMAX], * ptr;
 int Operator = 0, previous = 0, intermediate = 0;
-int CNT, inceputa, dist;
+int CNT, dist;
 string number;
 bool foundNumber = false;
 bool VerifParenthesis = false, VerifParenthesisSign = false, AfterComma = true, zero, raport = true;
@@ -206,10 +206,13 @@ void WordsToNumbers()
             if (strstr(ptr, "cu"))
             {
                 if (VerifParenthesis) goto SkipPar; /// trecem peste paranteza
-                if (foundNumber) { vectorCOD[i] = 'n'; i++; }
+                if (foundNumber)
+                {
+                    vectorCOD[i] = 'n'; i++;
+                }
             }
             SkipPar:
-            VerifParenthesis=false;
+            VerifParenthesis = false;
             foundNumber = false;
             if (previous != 0)
                 Operator += previous;
@@ -499,7 +502,7 @@ void reset()
 {
     // main
     Operator = 0, previous = 0, intermediate = 0;
-    CNT = 0, inceputa = 0, dist = 0;
+    CNT = 0, dist = 0;
     number.clear();
     foundNumber = false;
     VerifParenthesis = false, VerifParenthesisSign = false, AfterComma = true, zero = false, raport = true;

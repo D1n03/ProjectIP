@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1672650108 source:c:\users\asus\documents\github\projectip\calculatorro\main.cpp
+	<iostream>
+	<cstring>
+	<stack>
+	<math.h>
+	<graphics.h>
+	<winbgim.h>
+	"conv.h"
+	"calculate.h"
+	"printnum.h"
+
+1672650562 c:\users\asus\documents\github\projectip\calculatorro\conv.h
+	<iostream>
+	<cstring>
+	<stack>
+	<math.h>
+
+1672649464 c:\users\asus\documents\github\projectip\calculatorro\calculate.h
+	<iostream>
+
+1672649480 c:\users\asus\documents\github\projectip\calculatorro\printnum.h
+	<iostream>
+	<cstring>
+

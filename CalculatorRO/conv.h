@@ -456,13 +456,13 @@ void IntegerIntoWord(int val, bool flag, char newNS[200])
 }
 void extractOnlyTheUsefulWords(char* ptr) /// inlaturam cuvintele inutile din propozitie
 {
-    if (strstr(ptr, "suma") || strstr(ptr, "adunat") || strstr(ptr, "adunarea") || strstr(ptr, "adunarii") || strstr(ptr, "sumei"))
+    if (strstr(ptr, "suma") || /*strstr(ptr, "adunat") ||*/ strstr(ptr, "adunarea") || strstr(ptr, "adunarii") || strstr(ptr, "sumei") || strstr(ptr, "adunam"))
         strcat(inputModified, "+");
     if (strstr(ptr, "plus") || strstr(ptr, "adunat"))
         strcat(inputModified, "plus");
     if (strstr(ptr, "scader") || strstr(ptr, "-") || strstr(ptr, "diferenta") || strstr(ptr, "diferentei") || strstr(ptr, "scad"))
         strcat(inputModified, "-");
-    if (strstr(ptr, "minus"))
+    if (strstr(ptr, "minus") || strstr(ptr, "scazut"))
         strcat(inputModified, "minus");
     if (strstr(ptr, "produs") || strstr(ptr, "inmultir"))
         strcat(inputModified, "*");
