@@ -36,15 +36,15 @@ void WordsToNumbers()
     ptr = strtok(inputModified, sep);
     while (ptr)
     {
-        if (isNumber(ptr))
-        {
+        if (isNumber(ptr)) /// daca avem un numar, il calculam cu ajutorul functiei milion
+        {                   /// iar rezultatul il punem in vector de tip int Numbers
             if (strstr(ptr, "zero"))
                 zero = true;
             foundNumber = true;
             million(ptr, Operator, previous, intermediate);
         }
         else
-        {
+        {   /// punem in vector de codificari doar elemenetele relevante precum + - * / ( ) n etc..
             if (strstr(ptr, "+"))
             {
                 vectorCOD[i] = '+'; i++;
@@ -282,15 +282,15 @@ int CalculateInputModified()
         i = p;
         for (int t = 0; t < p; t++)
             vectorCOD[t] = auxCOD[t];
-    }
+    }///calculam primul tip de input
     if (IsOperator(vectorCOD[0]))
         number = to_string(calculate());
-    else {
+    else { /// calculam al doilea tip de input
         i = 0; j = 0;
         char current; //variabila in care se retine caracterul curent prelucrat/convertit
         double value; // valoarea, adica numarul in sine
         while (true)
-        {
+        {   // in prima faza luam elemenetele din vectorCOD si le punem in stiva de Operatii sau numere
             current = vectorCOD[i]; i++; // verificam primul simbol
             if (current == '\n')
                 break; // daca ajungem la finalul randului iesim din while
@@ -317,14 +317,14 @@ int CalculateInputModified()
             if (current == 'g') { //daca am citit functia cotangenta
                 item.type = 'g';
                 item.value = 0;
-                StackOp.push(item); 
+                StackOp.push(item);
                 continue;
             }
             if (current == 'l')
             {
                 item.type = 'l';
                 item.value = 0;
-                StackOp.push(item); 
+                StackOp.push(item);
                 continue;
             }
             if (current == 'n') { // daca am citit un numar
@@ -335,21 +335,20 @@ int CalculateInputModified()
                 continue;
             }
             if (current == '+' || current == '-' || current == '*' || current == '/' || current == '^') { // daca am citit o operatie
-                if (StackOp.size() == 0) { // daca stiva cu operatii este vida
+                if (StackOp.size() == 0) { // daca stiva cu operatii este vida, adaugam operatia in stiva
                     item.type = current;
                     item.value = 0;
-                    StackOp.push(item); 
+                    StackOp.push(item);
                     continue;
                 }
                 if (StackOp.size() != 0 && getPriority(current) > getPriority(StackOp.top().type)) { // daca stiva nu este vida, insa prioritatea operatiei curente este mai mare decat cea din varful stivei
                     item.type = current;
                     item.value = 0;
-                    StackOp.push(item); 
+                    StackOp.push(item);
                     continue;
                 }
                 if (StackOp.size() != 0 && getPriority(current) <= getPriority(StackOp.top().type)) { // daca stiva nu este vida, insa prioritatea operatiei curente e mai mica sau egala cu cea din varful stivei
-                    if (CalculateInStack(StackNr, StackOp, item) == false) { // daca funtia returneaza false false ne oprim
-                        system("pause");
+                    if (CalculateInStack(StackNr, StackOp, item) == false) { // calculam operatia iar daca funtia returneaza false ne oprim (avem un calcul imposibil)
                         return 0;
                     }
                     item.type = current;
@@ -375,11 +374,11 @@ int CalculateInputModified()
                 continue;
             }
             else
-            { //daca am citit un caracter straniu
+            {
                 break;
             }
         }
-        while (StackOp.size() != 0) //cat timp in stiva de operatii mai avem elemente facem operaiile 
+        while (StackOp.size() != 0) //cat timp in stiva de operatii mai avem elemente facem operaiile
         {
             if (CalculateInStack(StackNr, StackOp, item) == false) //daca functia returneaza false ne oprim
             {
@@ -482,7 +481,7 @@ void NumbersToWords()
         }
     }
 }
-void graphwindowINFO(int window)
+void rulesWindow(int window)
 {
     int x, y; // fereastra pentru reguli
     bool click = false;
@@ -545,7 +544,7 @@ int main()
             }
             else if(x > 83 && x < 277 && y > 263 && y < 327)
             {
-                graphwindowINFO(window);
+                rulesWindow(window);
                 goto menu;
             }
             else if(x > 126 && x < 259 && y > 404 && y < 469)

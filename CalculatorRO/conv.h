@@ -7,7 +7,7 @@ const int NMAX = 1000;
 char inputModified[NMAX] = "", sep[] = " ";
 bool thousands = 0;
 bool millions = 0;
-/// struct in care codificam operatiile
+/// struct in care codificam operatiile pentru al doilea tip de input
 struct codification
 {
     char type; /// 0 -> nr, + -> adunare, - -> minus
@@ -38,7 +38,7 @@ double Log(double x)
 {   //functie pt caclului log
     return(round(log(x) * 100000000) / 100000000);
 }
-/// functie de tip bool deoarece dorim sa returnam false cand apare o eroare
+///calculam si in acelasi timp verificam daca toate operatiile sunt valide
 bool CalculateInStack(stack < codification >& StackNr, stack < codification >& StackOp, codification& item)
 {
     double Nr1, Nr2, Rez;
