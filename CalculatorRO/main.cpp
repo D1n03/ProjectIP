@@ -394,7 +394,7 @@ int CalculateInputModified()
 /// verificam mai intai sa vedem daca este intreg numarul nostru
 bool verifyInteger(string s, int len)
 {
-    for (int i = 0; i < len; ++i)
+    for (int i = 0; i < len; i++)
         if (s[i] == ',' || s[i] == '.')
             return false;
     return true;
@@ -403,7 +403,7 @@ bool verifyInteger(string s, int len)
 string formatZero(string s, int len)
 {
     string format = "";
-    for (int i = 0; i < s.size(); ++i)
+    for (int i = 0; i < s.size(); i++)
     {
         if (s[i] != '0')
             break;
@@ -417,7 +417,7 @@ string changeToInteger(string s, int len)
     if (verifyInteger(s, len))
         return s;
     string format = "";
-    for (int i = 0; i < len; ++i)
+    for (int i = 0; i < len; i++)
         if (s[i] == '.' || s[i] == ',')
             return format;
         else format += s[i];
@@ -428,10 +428,8 @@ string formatAfterComma(string s, int len)
     string formatAux = changeToInteger(s, len);
     int integerLength = formatAux.size();
     string format = "";
-    for (int i = integerLength + 1; i < len; ++i)
-        if (s[i] == '(')
-            return format;
-        else format += s[i];
+    for (int i = integerLength + 1; i < len; i++)
+        format += s[i];
     return format;
 }
 /// convertire in cuvinte

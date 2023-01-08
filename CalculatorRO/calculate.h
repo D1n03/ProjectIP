@@ -42,6 +42,7 @@ double calculateFunction(char op, double x)
         break;
     }
 }
+//calcularea primului tip de input, de mentionat faptul ca functiile au doar un singur numar in componenta lor
 double calculate()
 {
     double nr = -1e9, res_divison;

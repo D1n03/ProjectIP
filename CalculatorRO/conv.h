@@ -13,7 +13,7 @@ struct codification
     char type; /// 0 -> nr, + -> adunare, - -> minus
     double value; /// 0 -> operatii, valoare pt numere
 };
-//functiile sin, cos, tg, ctg
+//functiile sin, cos, tg, ctg, log
 double Sin(double x)
 {   //rotunjim valoarea sinusului
     return (round(sin(x) * 100000000) / 100000000);
@@ -35,7 +35,7 @@ double Cot(double x)
     return (a / b);
 }
 double Log(double x)
-{   //functie pt caclului log
+{   //functie pt caclului log (logaritm natural)
     return(round(log(x) * 100000000) / 100000000);
 }
 ///calculam si in acelasi timp verificam daca toate operatiile sunt valide
@@ -318,6 +318,7 @@ void thousand(char* ptr, int& Operator, int& previous, int& intermediate)
     if (!found)
         hundred(ptr, Operator, previous, intermediate);
 }
+//calculam numarul prin verificarea cuvintelor pe care le-am extras, incepem de la milioane si scade pana la unitati
 void million(char* ptr, int& Operator, int& previous, int& intermediate)
 {
     bool found = false;
@@ -454,7 +455,7 @@ void IntegerIntoWord(int val, bool flag, char newNS[200])
     }
     return;
 }
-void extractOnlyTheUsefulWords(char* ptr) /// inlaturam cuvintele inutile din propozitie
+void extractOnlyTheUsefulWords(char* ptr) //inlaturam cuvintele inutile din propozitie
 {
     if (strstr(ptr, "suma") || /*strstr(ptr, "adunat") ||*/ strstr(ptr, "adunarea") || strstr(ptr, "adunarii") || strstr(ptr, "sumei") || strstr(ptr, "adunam"))
         strcat(inputModified, "+");
@@ -466,9 +467,9 @@ void extractOnlyTheUsefulWords(char* ptr) /// inlaturam cuvintele inutile din pr
         strcat(inputModified, "minus");
     if (strstr(ptr, "produs") || strstr(ptr, "inmultir"))
         strcat(inputModified, "*");
-    if (strstr(ptr, "inmultit") || strstr(ptr, "ori"))//dupa cuvantul "inmultit" se va pune cuvantul "la"
+    if (strstr(ptr, "inmultit") || strstr(ptr, "ori"))//pentru "inmultit" vom avea "la"
         strcat(inputModified, "ori");
-    if (strstr(ptr, "putere") || strstr(ptr, "la a")) ///pentru "la a" ?
+    if (strstr(ptr, "putere") || strstr(ptr, "la a")) //pentru "la a" ?
         strcat(inputModified, "^");
     if (strstr(ptr, "raport") || strstr(ptr, "impartirea") || strstr(ptr, "impartirei") || strstr(ptr, "impartirii") || strstr(ptr, "impartim"))
         strcat(inputModified, "/");

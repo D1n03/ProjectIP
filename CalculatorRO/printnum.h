@@ -195,7 +195,7 @@ void printHundred(string s, int Start, int Final)
 void printThousand(string s, int Start, int Final)
 {
     int nonZerosPozition = Final + 1;
-    /// cautam o pozitie pe care nu se afla zero | exemplu : 100021
+    /// cautam o pozitie pe care nu se afla zero | exemplu : 204021
     for (int i = Start + (Final - 2); i <= Final; ++i)
         if (s[i] != '0')
         {
@@ -260,7 +260,7 @@ void printThousand(string s, int Start, int Final)
 void printMillions(string s, int Start, int Final)
 {
     int nonZeroPozition = Final + 1;
-    /// cautam o pozitie pe care nu se afla zero | exemplu : 100320423
+    /// cautam o pozitie pe care nu se afla zero | exemplu : 106320423
     for (int i = Start + (Final - 5); i <= Final; ++i)
         if (s[i] != '0')
         {
@@ -330,6 +330,7 @@ void printMillions(string s, int Start, int Final)
             break;
     }
 }
+//pentru afisare, luam lungimea numarului nostru de tip string si in functie de valoare, stim ce cifra avem
 void printNumber(string s, int len)
 {
     switch (len)
