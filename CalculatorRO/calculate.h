@@ -251,6 +251,7 @@ double calculate()
                         cout << "Nu este posibila impartirea la 0" << "\n";
                         ans = false;
                         HowManyZeros++;
+                        break;
                     }
                     nr /= calculateFunction(vectorCOD[cnt1], Numbers[cnt2]);
                 }
@@ -265,6 +266,7 @@ double calculate()
                         cout << "Nu este posibila impartirea la 0" << "\n";
                         ans = false;
                         HowManyZeros++;
+                        break;
                     }
                     nr /= calculateFunction(vectorCOD[cnt1], Numbers[cnt2]);
                     cnt1 += 2;
@@ -283,6 +285,7 @@ double calculate()
                         cout << "Nu este posibila impartirea la 0" << "\n";
                         ans = false;
                         HowManyZeros++;
+                        break;
                     }
                     nr /= Numbers[cnt2];
                 }
@@ -298,6 +301,7 @@ double calculate()
                         cout << "Nu este posibila impartirea la 0" << "\n";
                         ans = false;
                         HowManyZeros++;
+                        break;
                     }
                     nr /= Numbers[cnt2];
                     cnt1++;
@@ -323,6 +327,7 @@ double calculate()
                     cout << "Nu este posibila impartirea la 0" << "\n";
                     ans = false;
                     HowManyZeros++;
+                    break;
                 }
                 nr /= res_divison;
                 res_divison = -1;

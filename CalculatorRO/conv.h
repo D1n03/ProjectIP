@@ -114,7 +114,7 @@ bool CalculateInStack(stack < codification >& StackNr, stack < codification >& S
         break;
     case 't':  //tangenta
         if (Cos(Nr1) == 0) {
-            cout << "\nArgument gresit pentru tangent!\n";
+            cout << "Argument gresit pentru tangent!\n";
             return false;
         }
         else {
@@ -127,7 +127,7 @@ bool CalculateInStack(stack < codification >& StackNr, stack < codification >& S
         }
     case 'g':  //cotangenta
         if (Sin(Nr1) == 0) {
-            cout << "\nArgument gresit pentru cotangent!\n";
+            cout << "Argument gresit pentru cotangent!\n";
             return false;
         }
         else {
@@ -140,7 +140,7 @@ bool CalculateInStack(stack < codification >& StackNr, stack < codification >& S
         }
     case 'l':  //logaritm natural
         if (Nr1 < 1) {
-            cout << "\nArgumentul trebuie sa fie mai mare ca 1 la logaritm natural pentru ca lucram cu numere pozitive!\n";
+            cout << "Argumentul trebuie sa fie mai mare ca 1 la logaritm natural pentru ca lucram cu numere pozitive!\n";
             return false;
         }
         else {

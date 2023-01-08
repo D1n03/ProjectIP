@@ -248,7 +248,6 @@ void WordsToNumbers()
 /////////////////////////////////////////////////////
 /// FUNCTII PENTRU CALCULAREA INPUTULUI CONVERTIT ///
 /////////////////////////////////////////////////////
-
 bool IsOperator(char ch)
 {
     if (ch == '+' || ch == '-' || ch == '*' || ch == '/')
@@ -349,6 +348,7 @@ int CalculateInputModified()
                 }
                 if (StackOp.size() != 0 && getPriority(current) <= getPriority(StackOp.top().type)) { // daca stiva nu este vida, insa prioritatea operatiei curente e mai mica sau egala cu cea din varful stivei
                     if (CalculateInStack(StackNr, StackOp, item) == false) { // calculam operatia iar daca funtia returneaza false ne oprim (avem un calcul imposibil)
+                        ans = false;
                         return 0;
                     }
                     item.type = current;
@@ -366,6 +366,7 @@ int CalculateInputModified()
             if (current == ')') { //daca am citit paranteza inchisa
                 while (StackOp.top().type != '(') {
                     if (CalculateInStack(StackNr, StackOp, item) == false) { //daca functia returneaza false ne oprim
+                        ans = false;
                         return 0;
                     }
                     else continue; //mergem mai departe daca totul este in regula
@@ -373,15 +374,13 @@ int CalculateInputModified()
                 StackOp.pop();
                 continue;
             }
-            else
-            {
-                break;
-            }
+            else break;
         }
         while (StackOp.size() != 0) //cat timp in stiva de operatii mai avem elemente facem operaiile
         {
             if (CalculateInStack(StackNr, StackOp, item) == false) //daca functia returneaza false ne oprim
             {
+                ans = false;
                 return 0;
             }
             else continue; //mergem mai departe daca totul este in regula
@@ -392,7 +391,7 @@ int CalculateInputModified()
 ////////////////////////////////////////////////////////
 /// FUNCTII PENTRU CONVERTIREA DIN NUMERE IN CUVINTE ///
 ////////////////////////////////////////////////////////
-/// verificam mai intai sa vedem daca este intreg
+/// verificam mai intai sa vedem daca este intreg numarul nostru
 bool verifyInteger(string s, int len)
 {
     for (int i = 0; i < len; ++i)
@@ -400,7 +399,7 @@ bool verifyInteger(string s, int len)
             return false;
     return true;
 }
-///formatam pt zero
+///formatam pentru zero
 string formatZero(string s, int len)
 {
     string format = "";
@@ -412,7 +411,7 @@ string formatZero(string s, int len)
     }
     return format;
 }
-/// convertim in numar intreg rezultatul
+/// convertim in numar intreg
 string changeToInteger(string s, int len)
 {
     if (verifyInteger(s, len))
@@ -435,7 +434,7 @@ string formatAfterComma(string s, int len)
         else format += s[i];
     return format;
 }
-/// numere convertite in cuvinte
+/// convertire in cuvinte
 void NumbersToWords()
 {
     if (number[0] == '-')
@@ -449,7 +448,7 @@ void NumbersToWords()
         if (number[len] == '.' || number[len] == ',')
         {
             number.erase(len, 1);
-            goto Virg; // facem caz virgula
+            goto Virg; //caz cu virgula
         }
         number.erase(len, 1);
         len--;

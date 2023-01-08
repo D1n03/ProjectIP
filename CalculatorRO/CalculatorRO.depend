@@ -23,3 +23,27 @@
 	<iostream>
 	<cstring>
 
+1673169997 source:c:\users\andr_\documents\github\projectip\calculatorro\main.cpp
+	<iostream>
+	<cstring>
+	<stack>
+	<math.h>
+	<graphics.h>
+	<winbgim.h>
+	"conv.h"
+	"calculate.h"
+	"printnum.h"
+
+1673169918 c:\users\andr_\documents\github\projectip\calculatorro\conv.h
+	<iostream>
+	<cstring>
+	<stack>
+	<math.h>
+
+1673169596 c:\users\andr_\documents\github\projectip\calculatorro\calculate.h
+	<iostream>
+
+1673169194 c:\users\andr_\documents\github\projectip\calculatorro\printnum.h
+	<iostream>
+	<cstring>
+
